@@ -1,0 +1,145 @@
+/* PicturesPage.css */
+.pictures-container {
+    text-align: center;
+  }
+  
+  .thumbnail {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Hide overflowing content */
+  }
+  
+  .thumbnail:hover .button {
+    opacity: 1; /* Show button on hover */
+    position: absolute;
+    bottom: 10px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 1; /* Place button above the image */
+  }
+  
+  .thumbnail img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; 
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the image */
+  }
+  
+/* BUTTON STUFF */
+.button {
+  background-color: #007BBDD7;
+  color: white;
+  border: none;
+  padding: 6px 12px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 50px; 
+  opacity: 0; 
+  position: absolute; 
+  bottom: 10px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  z-index: 1; 
+}
+
+.button:hover {
+  background-color: #0056A0;
+}
+
+.thumbnail:hover .button {
+  opacity: 1; /* Show button on hover */
+}
+
+
+  body {
+    overflow-x: hidden;
+  }
+  
+  .thumbnail:hover img {
+    transform: scale(1.05); /* Apply scaling to the image on hover */
+  }
+  
+
+  .modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+  }
+
+  
+  .modal {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 1000;
+  }
+  
+  .modal img {
+    max-width: 100%; /* Adjust the maximum width as needed */
+    max-height: 100vh; /* Adjust the maximum height as needed */
+    object-fit: contain; /* Maintain aspect ratio and fit within the max-height */
+  }
+  .close-button {
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    right: 10px; /* Adjust the right position as needed */
+    font-size: 24px; /* Adjust the font size as needed */
+    cursor: pointer;
+    z-index: 2; /* Place the button above the image and modal background */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better visibility */
+    border: none;
+    border-radius: 50%;
+    color: white;
+    width: 40px; /* Adjust the width as needed */
+    height: 40px; /* Adjust the height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .close-button:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Adjust the hover background color as needed */
+  }
+
+  .download-button {
+    background-color: #007BBDD7;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 50px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .download-button:hover {
+    background-color: #0056a0;
+    transform: translateX(-50%) scale(1.05); /* Apply scaling on hover */
+  }

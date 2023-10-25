@@ -1,0 +1,14 @@
+/* Banner.css */
+.banner {
+    width: 100%;
+    background-color: transparent; /* Set the background color to transparent */
+    padding: 0; /* Remove any padding */
+  }
+  
+  .banner img {
+    display: block;
+    margin: 0 auto; /* Center the image horizontally */
+    max-width: 100%;
+    height: auto;
+  }
+  
