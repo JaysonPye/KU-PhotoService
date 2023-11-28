@@ -1,9 +1,17 @@
 /* PicturesPage.css */
+
 .pictures-container {
     text-align: center;
+    background-color: #FBF2E8;
+    background-image: url('../images/photobook-icons-kids.svg'); 
+    background-repeat: no-repeat;
+    background-size: 30%; /* Adjust the background size as needed */
+    background-position: left bottom; /* Position the image at the bottom left */
+    background-attachment: fixed;
   }
   
   .thumbnail {
+    background-color: white;
     position: relative;
     display: inline-flex;
     justify-content: center;
@@ -36,7 +44,7 @@
   
 /* BUTTON STUFF */
 .button {
-  background-color: #007BBDD7;
+  background-color: #EF8200; /* Hard orange color for login button */
   color: white;
   border: none;
   padding: 6px 12px; 
@@ -52,7 +60,7 @@
 }
 
 .button:hover {
-  background-color: #0056A0;
+  background-color: #D76F00; /* Darker orange color on hover */
 }
 
 .thumbnail:hover .button {
@@ -78,8 +86,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(239, 130, 0, 0.8);
     z-index: 999;
+    min-width: 300px;
   }
 
   
@@ -92,7 +101,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-
+    min-width: 300px;
     z-index: 1000;
   }
   
@@ -103,43 +112,99 @@
   }
   .close-button {
     position: absolute;
-    top: 10px; /* Adjust the top position as needed */
-    right: 10px; /* Adjust the right position as needed */
-    font-size: 24px; /* Adjust the font size as needed */
+    top: 15%; /* Adjust the top position as needed */
+    right: 25%; /* Adjust the right position as needed */
+    font-size: 24px;
     cursor: pointer;
-    z-index: 2; /* Place the button above the image and modal background */
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better visibility */
+    z-index: 2;
+
     border: none;
-    border-radius: 50%;
+
     color: white;
-    width: 40px; /* Adjust the width as needed */
-    height: 40px; /* Adjust the height as needed */
+    width: 28px;
+    height: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
   }
   
   .close-button:hover {
-    background-color: rgba(0, 0, 0, 0.7); /* Adjust the hover background color as needed */
+    transform: scale(1.1); /* Scale up by 10% on hover */
   }
 
   .download-button {
-    background-color: #007BBDD7;
-    color: white;
-    border: none;
-    padding: 6px 12px;
+    background-color: #EF8200; /* Set the background color to match the modal */
+    color: white; /* White text color */
+    border: 2px solid white; /* Add a thick white border */
+    padding: 6px 35px;
     cursor: pointer;
     border-radius: 50px;
     position: absolute;
-    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
+    bottom: 15%;
     z-index: 1;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; /* Include opacity transition */
+    display: flex;
+    align-items: center; /* Center the text and image vertically */
+    opacity: 0.9; /* Set the initial opacity (slightly transparent) */
+    font-weight: 600;
+  }
+  .download-button::after {
+    content: ''; /* Add content for the pseudo-element */
+    background-image: url('../images/photobook-download-small.svg'); /* Replace with your SVG image path */
+    background-size: 20px 20px; /* Adjust the size of the background image */
+    background-repeat: no-repeat; /* Prevent image from repeating */
+    width: 20px; /* Adjust the width of the image */
+    height: 20px; /* Adjust the height of the image */
+    margin-left: 20px; /* Add margin to separate from the text */
   }
   
   .download-button:hover {
-    background-color: #0056a0;
+    background-color: #D76F00; /* Stronger color on hover */
     transform: translateX(-50%) scale(1.05); /* Apply scaling on hover */
   }
+
+  /* IMAGE GALLERY STYLES */
+
+  .image-gallery-slide img {
+    max-width: 60%; /* Adjust the maximum width as needed */
+    max-height: 60vh; /* Adjust the maximum height as needed */
+    object-fit: contain; /* Maintain aspect ratio and fit within the max dimensions */
+    border: 5px solid white;
+  }
+
+  /* Change the arrow and close button color on hover */
+
+
+.image-gallery-left-nav:hover svg {
+  transform: scale(1.1); /* Scale up by 10% on hover */
+}
+.image-gallery-right-nav:hover svg {
+  transform: scale(1.1); /* Scale up by 10% on hover */
+}
+
+.image-gallery-left-nav svg {
+  stroke-width: 2px;
+}
+
+.image-gallery-right-nav svg {
+  stroke-width: 2px;
+}
+
+
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .download-button {
+    position: static; /* Change to static positioning to keep it in the document flow */
+    transform: none; /* Reset the transform */
+    text-align: center; /* Center-align the button */
+    margin-top: 10px; /* Add margin to separate it from the picture */
+    height: auto; /* Allow the height to adjust to the button's content */
+  }
+}

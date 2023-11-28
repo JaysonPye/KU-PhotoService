@@ -1,14 +1,27 @@
-/* Banner.css */
 .banner {
-    width: 100%;
-    background-color: transparent; /* Set the background color to transparent */
-    padding: 0; /* Remove any padding */
-  }
-  
-  .banner img {
-    display: block;
-    margin: 0 auto; /* Center the image horizontally */
-    max-width: 100%;
-    height: auto;
-  }
-  
+  width: 100%;
+  background-color: #EF8200;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the content horizontally */
+  height: 90px;
+  color: white; /* Set the text color to white */
+}
+
+.found-school {
+  position: absolute;
+  left: 10px; /* Adjust the position as needed */
+  font-weight: bold;
+}
+
+.banner .logo-icon {
+  max-width: 100%;
+  max-height: 60px;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+}

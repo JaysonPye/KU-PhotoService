@@ -1,40 +1,95 @@
 /* Updated styles for the login container */
-div.login-container {
-    background-color: #F5F5F5; /* Light gray background */
-    max-width: 400px;
-    padding: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin: 50px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Updated styles for the login box */
-  .login-box {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  background-color: #FBF2E8;
+  overflow: hidden;
+  color: #EF8200;
+  height: calc(100vh - 100px);
+  background-image: url('../images/photobook-icons-kids.svg'); 
+  background-repeat: no-repeat;
+  background-size: 30%; /* Adjust the background size as needed */
+  background-position: left bottom; /* Position the image at the bottom left */
+}
+
+.login-box {
+  background-color: white;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 60%; /* Adjust the width to 70% for the login box */
+  margin-top: 10vh;
+  border: 2px solid #EF8200;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden; /* Hide overflowing content */
+  min-height: 30vh;
+}
+
+/* LoginPage.css */
+.login-content {
+  flex: 1; /* Make login content take up remaining space */
+  padding-right: 20px; /* Add some spacing between login content and image */
+}
+
+.login-image-container {
+  flex: 0 0 30%; /* Take up 30% of the available width */
+  max-width: 30%; /* Set a maximum width if needed */
+  position: relative; /* Allow relative positioning within the container */
+  overflow: hidden; /* Hide overflowing content */
+  height: 100%; /* Ensure the container takes the full height of the login box */
+  margin: -25px; /* Remove any margin on top and bottom, but keep -10px left and right margin */
+
+}
+
+.login-image {
+  width: 100%; /* Ensure the image fills its container */
+  height: 100%; /* Make the image take the full height of the container */
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+
+
+
+
+/* Input and buttons */
+
+
+input[type="text"] {
+  border: 2px solid #EF8200; /* Harder orange border */
+  border-radius: 15px; /* Rounded edges */
+  padding: 10px; /* Adjust the padding for height and width */
+  width: 80%; /* Make the input field 100% width of its container */
+  height: 30px; /* Adjust the height as needed */
+  font-size: 16px; /* Adjust the font size as needed */
+}
+input[type="text"]:focus {
+  border: 3px solid #EF8200; /* Thicker orange border when focused */
+  outline: none; /* Remove the default blue outline */
+}
+h2 {
+  font-size: 20px; /* Adjust the font size for h2 */
+}
   /* Updated styles for the login button */
   .login-button {
-    background-color: #007BBDD7; /* Blue color for login button */
+    background-color: #EF8200; /* Hard orange color for login button */
     color: white;
-    padding: 12px 24px;
+    padding: 15px 70px;
     border: none;
-    border-radius: 4px;
+    border-radius: 15px; /* Rounded edges */
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-weight: bold; /* Make the text bold */
   }
   
   .login-button:hover {
-    background-color: #0056A0; /* Darker blue color on hover */
+    background-color: #D76F00; /* Darker orange color on hover */
   }
   
   /* Updated styles for the error message */

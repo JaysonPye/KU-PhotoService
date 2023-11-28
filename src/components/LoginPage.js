@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Spinner.css'; 
 import '../styles/LoginPage.css';
-
+import loginImage from '../images/home-img-1.jpg';
+import Banner from './Banner';
 function LoginPage() {
     const [code, setCode] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-  
     // Handles login submission
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -27,7 +27,9 @@ function LoginPage() {
           if (response.ok) {
             console.log('Login successful');
             response.json().then((data) => {
-              navigate(`/pictures/${data.folder_id}`);
+              console.log("foundSchool:", data.school);
+
+              navigate(`/pictures/${data.folder_id}`, { state: { foundSchool: data.school } });
             });
           } else {
             console.error('Login failed');
@@ -49,26 +51,39 @@ function LoginPage() {
     };
   
     return (
+      <div className="login-page-container">
+        <Banner />
       <div className="login-container">
+
         <div className="login-box">
-          <h1>Login</h1>
-          {loading && <div className="spinner"></div>}
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="code">Code:</label>
-            <input
-              type="text"
-              id="code"
-              name="code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              required
-            />
-            <br />
-            <br />
-            <button className="login-button" type="submit">Login</button>
-          </form>
+          <div className="login-content">
+            <h1>Welcome back,</h1>
+            <h2>パスワード</h2>
+            {loading && <div className="spinner"></div>}
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="code"></label>
+              <input
+                type="text"
+                id="code"
+                name="code"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                required
+                className="login-input"
+              />
+              <br />
+              <br />
+              <button className="login-button" type="submit">
+                ログイン
+              </button>
+            </form>
+          </div>
+          <div className="login-image-container">
+            <img src={loginImage} alt="Login Image" className="login-image" />
+          </div>
         </div>
+      </div>
       </div>
     );
   }

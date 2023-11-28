@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import '../styles/PicturesPage.css';
 import Gallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
+import Banner from './Banner';
+import { CustomCloseButton,CustomRightArrow,CustomLeftArrow } from '../images/icons';
+
 
 function PicturesPage() {
   const { folderId } = useParams();
   const [files, setFiles] = useState([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const location = useLocation();
+  const foundSchool = location.state && location.state.foundSchool;
 
   const handleDownload = (fileId) => {
     const link = document.createElement('a');
@@ -62,6 +67,7 @@ function PicturesPage() {
 
   return (
     <div className="pictures-container">
+      <Banner foundSchool={foundSchool} />
       <div className="picture-list">
         {files.map((file, index) => (
           <div
@@ -85,14 +91,12 @@ function PicturesPage() {
       {selectedImageIndex !== null && (
         <div className="modal-container">
           <div className="modal centered">
-            <button className="close-button" onClick={closeModal}>
-              X
-            </button>
+          <CustomCloseButton onClick={closeModal} className="close-button" />
             <button
               className="download-button"
               onClick={() => handleDownload(files[selectedImageIndex].id)}
             >
-              Download
+              DOWNLOAD
             </button>
             <Gallery
               items={images}

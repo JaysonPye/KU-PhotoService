@@ -7,7 +7,6 @@ import PicturesPage from './components/PicturesPage';
 function App() {
   return (
     <Router>
-      <Banner />
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/pictures/:folderId" element={<PicturesPage />} />
