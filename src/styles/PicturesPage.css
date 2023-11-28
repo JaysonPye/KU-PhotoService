@@ -112,7 +112,7 @@
   }
   .close-button {
     position: absolute;
-    top: 15%; /* Adjust the top position as needed */
+    top: 10%; /* Adjust the top position as needed */
     right: 25%; /* Adjust the right position as needed */
     font-size: 24px;
     cursor: pointer;
@@ -144,7 +144,7 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 15%;
+    bottom: 10%;
     z-index: 1;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; /* Include opacity transition */
     display: flex;
@@ -170,8 +170,8 @@
   /* IMAGE GALLERY STYLES */
 
   .image-gallery-slide img {
-    max-width: 60%; /* Adjust the maximum width as needed */
-    max-height: 60vh; /* Adjust the maximum height as needed */
+    max-width: 70%; /* Adjust the maximum width as needed */
+    max-height: 70vh; /* Adjust the maximum height as needed */
     object-fit: contain; /* Maintain aspect ratio and fit within the max dimensions */
     border: 5px solid white;
   }
@@ -181,9 +181,11 @@
 
 .image-gallery-left-nav:hover svg {
   transform: scale(1.1); /* Scale up by 10% on hover */
+  color: white;
 }
 .image-gallery-right-nav:hover svg {
   transform: scale(1.1); /* Scale up by 10% on hover */
+  color: white;
 }
 
 .image-gallery-left-nav svg {
