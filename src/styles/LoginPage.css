@@ -1,4 +1,7 @@
 /* Updated styles for the login container */
+html{
+  background-color: #FBF2E8;
+}
 .login-container {
   display: flex;
   justify-content: center;
@@ -61,17 +64,24 @@
 /* Input and buttons */
 
 
-input[type="text"] {
+input[type="password"] {
   border: 2px solid #EF8200; /* Harder orange border */
   border-radius: 15px; /* Rounded edges */
   padding: 10px; /* Adjust the padding for height and width */
   width: 80%; /* Make the input field 100% width of its container */
   height: 30px; /* Adjust the height as needed */
   font-size: 16px; /* Adjust the font size as needed */
+  background-image: url('../images/photobook-icons-key.svg'); /* Replace with the correct path to your key icon image */
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  background-position: center left;
+  background-position-x: 10px;
 }
-input[type="text"]:focus {
+
+input[type="password"]:focus {
   border: 3px solid #EF8200; /* Thicker orange border when focused */
   outline: none; /* Remove the default blue outline */
+  background-image: none;
 }
 h2 {
   font-size: 20px; /* Adjust the font size for h2 */
@@ -94,8 +104,52 @@ h2 {
   
   /* Updated styles for the error message */
   .error-message {
-    color: #FF3B30; /* Red color for error message */
+    color: #D76F00; /* Red color for error message */
     margin-top: 10px;
     font-size: 14px;
+    
   }
   
+  /* Mobile Styles */
+@media (max-width: 768px) {
+  .login-container {
+    background-size: 60%; /* Adjust the background size for mobile */
+    background-position: center bottom; /* Position the image at the center bottom */
+  }
+  .login-container::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Position it below the .login-container */
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Fill the remaining viewport height */
+    background-color: #FBF2E8; /* Set the background color you want */
+  }
+
+  .login-box {
+    background-color: transparent; /* Make the login box background transparent */
+    box-shadow: none; /* Remove the box shadow */
+    border: none; /* Remove the border */
+    width: 100%; /* Make the login box full width */
+    padding: 0; /* Remove padding */
+ /* Adjust the min-height for full-screen display */
+  }
+
+  .login-image-container {
+    display: none; /* Hide the image container */
+  }
+
+  input[type="password"] {
+    background-position: center left;
+    background-position-x: 10px;
+    background-color: #FBF2E8;
+  }
+
+  h2 {
+    font-size: 18px; /* Adjust the font size for h2 on mobile */
+  }
+
+  .login-button {
+    padding: 15px 50px; /* Adjust padding for the login button on mobile */
+  }
+}

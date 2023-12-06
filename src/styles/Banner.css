@@ -25,3 +25,14 @@
   display: flex;
   align-items: center;
 }
+
+/* Add mobile-specific styles */
+@media (max-width: 768px) {
+  .found-school {
+    display: none; /* Hide the school name */
+  }
+
+  .banner {
+    height: 60px; /* Adjust the banner height for mobile view */
+  }
+}

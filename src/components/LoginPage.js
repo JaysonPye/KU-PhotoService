@@ -33,7 +33,7 @@ function LoginPage() {
             });
           } else {
             console.error('Login failed');
-            setErrorMessage('Invalid login code. Please try again.');
+            setErrorMessage('コードが間違っています');
           }
         })
         .catch((error) => {
@@ -64,7 +64,7 @@ function LoginPage() {
             <form onSubmit={handleSubmit}>
               <label htmlFor="code"></label>
               <input
-                type="text"
+                type="password"
                 id="code"
                 name="code"
                 value={code}

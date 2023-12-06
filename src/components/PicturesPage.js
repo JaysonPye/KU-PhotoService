@@ -68,6 +68,14 @@ function PicturesPage() {
   return (
     <div className="pictures-container">
       <Banner foundSchool={foundSchool} />
+
+      {/* render school name based on mobile view */}
+      {window.innerWidth <= 768 && foundSchool && (
+        <div className="mobile-school-info">
+          <div className="mobile-school-name">{foundSchool}</div>
+          <hr className="mobile-divider" />
+        </div>
+      )}
       <div className="picture-list">
         {files.map((file, index) => (
           <div
@@ -75,7 +83,9 @@ function PicturesPage() {
             className="thumbnail"
             onClick={() => setSelectedImageIndex(index)}
           >
+            <div className="image-container">
             <img src={file.thumbnailUrl} alt={file.name} />
+            </div>
             <button
               className="button"
               onClick={(e) => {

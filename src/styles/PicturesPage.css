@@ -1,5 +1,30 @@
 /* PicturesPage.css */
 
+
+
+
+/* Mobile school name and line */
+.mobile-school-info {
+  text-align: left;
+  margin: 10px;
+}
+
+.mobile-school-name {
+  font-weight: bold;
+  color: #EF8200; /* Orange color */
+  margin-bottom: 5px; /* Add some space below the school name */
+}
+
+.mobile-divider {
+  border: none;
+  border-top: 2px dashed #EF8200; /* Orange horizontal line */
+  width: 100%;
+  margin: 10px 0; /* Add margin above and below the line */
+}
+
+
+
+/* Pictures container stuff */
 .pictures-container {
     text-align: center;
     background-color: #FBF2E8;
@@ -11,35 +36,45 @@
   }
   
   .thumbnail {
-    background-color: white;
     position: relative;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 150px;
-    margin: 10px;
+    width: 220px;
+    height: 230px;
+    margin: 5px;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     overflow: hidden; /* Hide overflowing content */
   }
   
   .thumbnail:hover .button {
     opacity: 1; /* Show button on hover */
     position: absolute;
-    bottom: 10px; 
-    left: 50%; 
-    transform: translateX(-50%); 
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1; /* Place button above the image */
   }
   
-  .thumbnail img {
-    width: 100%; 
-    height: 100%; 
-    object-fit: contain; 
+  .image-container {
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
-    transition: transform 0.3s ease-in-out; /* Apply transition to the image */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image-container img {
+    max-width: 90%;
+    max-height: 70%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Maintain aspect ratio and fit within the container */
+    border: 4px solid white; /* Add a 4px white border around the image */
+    background-color: #FBF2E8;
   }
   
 /* BUTTON STUFF */
@@ -47,16 +82,31 @@
   background-color: #EF8200; /* Hard orange color for login button */
   color: white;
   border: none;
-  padding: 6px 12px; 
+  padding: 3px 15px; 
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   border-radius: 50px; 
   opacity: 0; 
   position: absolute; 
+  text-align: center;
   bottom: 10px; 
   left: 50%; 
   transform: translateX(-50%); 
   z-index: 1; 
+  display: flex;
+}
+.button::after{
+  background-size: 15px 15px; /* Adjust the size of the background image */
+  background-repeat: no-repeat;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-left: 10px;
+  content: ''; /* Add content for the pseudo-element */
+  background-image: url('../images/photobook-download-small.svg'); /* Replace with your SVG image path */
+  background-size: 15px 15px; /* Adjust the size of the background image */
+  background-repeat: no-repeat; /* Prevent image from repeating */
+
 }
 
 .button:hover {
@@ -74,6 +124,7 @@
   
   .thumbnail:hover img {
     transform: scale(1.05); /* Apply scaling to the image on hover */
+    border-color: #EF8200;
   }
   
 
@@ -86,7 +137,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(239, 130, 0, 0.8);
+    background-color: rgba(239, 130, 0, 0.7);
     z-index: 999;
     min-width: 300px;
   }
@@ -135,6 +186,7 @@
   }
 
   .download-button {
+  
     background-color: #EF8200; /* Set the background color to match the modal */
     color: white; /* White text color */
     border: 2px solid white; /* Add a thick white border */
@@ -190,23 +242,75 @@
 
 .image-gallery-left-nav svg {
   stroke-width: 2px;
+  box-shadow: none;
 }
 
 .image-gallery-right-nav svg {
   stroke-width: 2px;
+  box-shadow: none IM !important;
 }
-
-
-
 
 /* MOBILE */
 
 @media (max-width: 768px) {
+
   .download-button {
-    position: static; /* Change to static positioning to keep it in the document flow */
-    transform: none; /* Reset the transform */
+    position: absolute; /* Change to static positioning to keep it in the document flow */
     text-align: center; /* Center-align the button */
     margin-top: 10px; /* Add margin to separate it from the picture */
     height: auto; /* Allow the height to adjust to the button's content */
+  }
+
+  .thumbnail {
+    position: relative; /* Change to relative positioning */
+  }
+
+  .thumbnail:hover .button {
+    bottom: 0px;
+  }
+  .button {
+    position: absolute;
+    text-align: center;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 1;
+    background-color: transparent; /* Set background color to transparent */
+    color: #EF8200; /* Set text color to orange */
+    border: 2px solid #EF8200; /* Add an orange border */
+    padding: 3px 15px; /* Adjust padding as needed */
+    border-radius: 50px; /* Add border-radius for rounded corners */
+    display: flex; /* Display contents in a row */
+    font-weight: 600;
+    
+  }
+
+  .button:hover {
+    background-color: transparent;
+    color: #EF8200;
+    border: 3px solid #EF8200; 
+  }
+  /* Style the download button text */
+  .button::before {
+    margin-right: 0px; /* Adjust spacing between text and icon */
+    bottom: 0px
+  }
+
+  /* Style the download button image */
+  .button::after {
+    bottom: 0px;
+    content: '';
+    background-image: url('../images/photobook-download-small-orange.svg');
+    background-size: 15px 15px; /* Adjust the size of the background image */
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-left: 10px;
+    bottom: 0px;
+  }
+  /* Remove the image scaling on hover */
+  .thumbnail:hover img {
+    transform: none;
   }
 }
