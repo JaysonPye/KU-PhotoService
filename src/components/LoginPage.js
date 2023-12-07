@@ -27,9 +27,18 @@ function LoginPage() {
           if (response.ok) {
             console.log('Login successful');
             response.json().then((data) => {
-              console.log("foundSchool:", data.school);
+              if (data.activities) {
+                // It's a seasonal login with activities
+                // Send data.activities to the backend
+              navigate(`/seasonal-pictures`, { state: { activities: data.activities, foundSchool: data.school } });
 
-              navigate(`/pictures/${data.folder_id}`, { state: { foundSchool: data.school } });
+              } else if (data.folder_id) {
+                // party page
+                navigate(`/pictures/${data.folder_id}`, { state: { foundSchool: data.school } });
+              } else {
+                // Handle any other type of response
+                console.error('Unknown response type');
+              }
             });
           } else {
             console.error('Login failed');
