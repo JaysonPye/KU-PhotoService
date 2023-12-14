@@ -1,29 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Banner.css';
 import bannerIcon from '../images/banner-icon.svg';
-import { useLocation } from 'react-router-dom';
 
-function Banner() {
-  const location = useLocation();
-  const foundSchool = location.state && location.state.foundSchool;
-  console.log("foundSchool:", foundSchool);
+
+
+function Banner({foundSchool, activityData, navigateToSection}) {
+  const [selectedDate, setSelectedDate,] = useState('');
+  const navigate = useNavigate();
+
 
   return (
-    <header className="banner">
-      <div className="banner-content">
-        {foundSchool && <div className="found-school">{foundSchool}</div>}
+    <div className="banner">
+      <h1>{foundSchool}</h1>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg" // Correct xmlns value
-          width="100"
-          height="100"
-          viewBox="0 0 100 100"
-          className="logo-icon"
-        >
-        </svg>
-        <img src={bannerIcon} alt="Logo Icon" className="logo-icon" />
-      </div>
-    </header>
+      {/* Conditionally render the date selector */}
+      {activityData && (
+        <>
+          <label htmlFor="date">Select a Date:</label>
+          <select
+  id="date"
+  name="date"
+  value={selectedDate}
+  onChange={(e) => {
+    const selectedDate = e.target.value;
+    setSelectedDate(selectedDate);
+    console.log(`Navigating to section: activity-${selectedDate.replace(/[^a-zA-Z0-9-_]/g, '-')}`);
+    if (selectedDate) {
+      console.log(`Navigating to section: activity-${selectedDate.replace(/[^a-zA-Z0-9-_]/g, '-')}`);
+      // navigate to the correct activity and remove kanji cuz it cant fit in URL
+      navigateToSection(`activity-${selectedDate.replace(/[^a-zA-Z0-9-_]/g, '-')}`);
+
+    }
+  }}
+>
+  <option value="">Select</option>
+  {activityData.map((activity, index) => (
+    <option key={index} value={activity.date}>
+      {activity.date}
+    </option>
+  ))}
+</select>
+        </>
+      )}
+    </div>
   );
 }
 

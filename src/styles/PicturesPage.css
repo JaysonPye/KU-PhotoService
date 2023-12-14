@@ -1,7 +1,9 @@
 /* PicturesPage.css */
 
 
-
+.banner{
+  position: sticky;
+}
 
 /* Mobile school name and line */
 .mobile-school-info {

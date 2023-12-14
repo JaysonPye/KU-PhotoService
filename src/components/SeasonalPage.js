@@ -4,46 +4,54 @@ import '../styles/PicturesPage.css';
 import Gallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Banner from './Banner';
-import { CustomCloseButton,CustomRightArrow,CustomLeftArrow } from '../images/icons';
-
+import { CustomCloseButton } from '../images/icons';
 
 function SeasonalPage() {
   const location = useLocation();
   const foundSchool = location.state && location.state.foundSchool;
-  const [activities, setActivities] = useState([]);
   const [selectedActivityIndex, setSelectedActivityIndex] = useState(null);
-  const [files, setFiles] = useState([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
-  const [activityData, setActivityData] = useState([]); 
-  console.log('Initial activities:', location.state && location.state.activities);
+  const [activityData, setActivityData] = useState([]);
 
   useEffect(() => {
-    // Check if activities data is available in the location state
+    function fetchSeasonalPictures() {
+      fetch('http://localhost:5000/seasonal-pictures', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ activities: location.state.activities }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            console.error('Error fetching seasonal pictures:', response.status);
+            throw new Error('Error fetching seasonal pictures');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log('Seasonal Pictures:', data);
+          setActivityData(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching seasonal pictures:', error);
+        });
+    }
+
     if (location.state && location.state.activities) {
-      const activityData = location.state.activities;
-      console.log('Activity Data:', activityData);
-      setActivityData(activityData);
+      fetchSeasonalPictures();
     }
   }, [location.state]);
 
-  async function fetchPicturesForActivity(folderId) {
-    try {
-      const response = await fetch(`/pictures?folder_id=${folderId}`);
-      
-      if (!response.ok) {
-        console.error('Error fetching pictures:', response.status);
-        return [];
-      }
-  
-      const data = await response.json();
-      return data.files;
-    } catch (error) {
-      console.error('Error fetching pictures:', error);
-      return [];
+//Navigates to the seasonal date clicked
+  const navigateToSection = (sectionId) => {
+    console.log('searching for',sectionId)
+    const element = document.getElementById(sectionId);
+    console.log('called', element)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
-  }
-
-  
+  };
   const handleDownload = (fileId) => {
     const link = document.createElement('a');
     link.href = `https://drive.google.com/uc?export=download&id=${fileId}`;
@@ -53,42 +61,20 @@ function SeasonalPage() {
     link.click();
     document.body.removeChild(link);
   };
-  const images = files.map((file) => ({
-    original: file.imageUrl,
-    thumbnail: file.thumbnailUrl,
-  }));
+
 
   const closeModal = () => {
     setSelectedImageIndex(null);
   };
 
-  // Add event listeners to close the modal on clicking off-screen or pressing Escape
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === 'Escape') {
-        closeModal();
-      }
-    };
-
-    const handleClickOutside = (event) => {
-      if (event.target.classList.contains('modal-container')) {
-        closeModal();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-    window.addEventListener('click', handleClickOutside);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-      window.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-
   return (
     <div className="pictures-container">
-      <Banner foundSchool={foundSchool} />
-
+  {activityData ? (
+    <Banner foundSchool={foundSchool} activityData={activityData} navigateToSection={navigateToSection} />
+  ) : (
+    <Banner foundSchool={foundSchool} />
+  )}
+  
       {/* render school name based on mobile view */}
       {window.innerWidth <= 768 && foundSchool && (
         <div className="mobile-school-info">
@@ -96,44 +82,59 @@ function SeasonalPage() {
           <hr className="mobile-divider" />
         </div>
       )}
-    {/* Map through activityData and render names and dates */}
-    {activityData.map((activity, index) => (
-      <div key={index} className="activity-section">
-        <h2>{activity.name}</h2>
-        <p>Date: {activity.date}</p>
-        {images.length > 0 && (
-            <div>
-              <button onClick={() => handleDownload(files[selectedImageIndex].id)}>
-                DOWNLOAD
-              </button>
-              <Gallery
-                items={images}
-                startIndex={selectedImageIndex}
-                showIndex={false}
-                showThumbnails={false}
-                lazyLoad={true}
-                showBullets={false}
-                showFullscreenButton={false}
-                showPlayButton={false}
-                onClose={closeModal}
-                onSlide={(currentIndex) => setSelectedImageIndex(currentIndex)}
-              />
-            </div>
-          )}
+  {activityData.map((activity, index) => (
+    
+    <div key={index} className="activity-section" id={`activity-${activity.date.replace(/[^a-zA-Z0-9-_]/g, '-')}`}>
+    <h2>{activity.name}</h2>
+    <p>Date: {activity.date} {activity.files[1].thumbnailUrl}</p>
+    {console.log(`Generated ID: activity-${activity.date.replace(/[^a-zA-Z0-9-_]/g, '-')}`)}
+
+    <div>
+    <button onClick={() => handleDownload(activity.files[selectedImageIndex].id)}>
+      DOWNLOAD
+    </button>
+    <div className="thumbnails">
+      {activity.files.map((file, fileIndex) => (
+        <div key={fileIndex} className="thumbnail">
+          <div className="image-container">
+            <img
+              src={file.thumbnailUrl}
+              alt={`Thumbnail ${fileIndex}`}
+              onClick={() => { setSelectedImageIndex(fileIndex); console.log(fileIndex);     setSelectedActivityIndex(index);}}
+              
+            />
+          </div>
+          <button
+            className="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDownload(file.id);
+            }}
+          >
+            Download
+          </button>
         </div>
       ))}
+    </div>
+  </div>
+  
+  </div>
+))}
       {selectedImageIndex !== null && (
         <div className="modal-container">
           <div className="modal centered">
-          <CustomCloseButton onClick={closeModal} className="close-button" />
+            <CustomCloseButton onClick={closeModal} className="close-button" />
             <button
               className="download-button"
-              onClick={() => handleDownload(files[selectedImageIndex].id)}
+              onClick={() => handleDownload(activityData[selectedActivityIndex].files[selectedImageIndex].id)}
             >
               DOWNLOAD
             </button>
             <Gallery
-              items={images}
+              items={activityData[selectedActivityIndex].files.map((file) => ({
+                original: file.imageUrl,
+                thumbnail: file.thumbnailUrl,
+              }))}
               startIndex={selectedImageIndex}
               showIndex={false}
               showThumbnails={false}

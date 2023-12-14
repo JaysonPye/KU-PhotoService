@@ -1,4 +1,5 @@
 .banner {
+  position: sticky;
   width: 100%;
   background-color: #EF8200;
   padding: 0;
