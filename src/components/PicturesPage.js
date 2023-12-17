@@ -4,7 +4,7 @@ import '../styles/PicturesPage.css';
 import Gallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Banner from './Banner';
-import { CustomCloseButton,CustomRightArrow,CustomLeftArrow } from '../images/icons';
+import { CustomCloseButton} from '../images/icons';
 
 
 function PicturesPage() {

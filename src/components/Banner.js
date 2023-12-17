@@ -9,6 +9,7 @@ function Banner({foundSchool, activityData, navigateToSection}) {
   const [selectedDate, setSelectedDate,] = useState('');
   const navigate = useNavigate();
 
+  
   //custom selector to allow styling
   const options = activityData
     ? activityData.map((activity, index) => ({
@@ -24,22 +25,62 @@ function Banner({foundSchool, activityData, navigateToSection}) {
     }
   };
 
+  //Styles for the selector, doesnt work in css
+  const customStyles = {
+    control: (provided ) => ({
+      ...provided,
+      fontWeight: 'bold',
+      color: '#EF8200',
+      paddingLeft: '30px',
+      borderRadius: '30px',
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: '#EF8200', 
+    }),
+
+    option: (provided, state ) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? 'rgba(255, 165, 0, 0.3)' : 'inherit',
+      '&:hover': { backgroundColor: state.isSelected ? 'rgba(255, 165, 0, 0.3)' : 'rgb(255, 165, 0, 0.5)' },
+      color: '#EF8200', 
+      fontWeight: 'bold',
+      right: '20px',
+      borderRadius: '20px',
+      
+    }),
+    menu: (provided) => ({
+      ...provided,
+      color: '#EF8200', 
+      border: '2px solid #EF8200', 
+      borderRadius: '30px',
+    }),
+    singleValue: provided =>({
+      ...provided,
+      color: '#EF8200',
+    })
+    
+  };
   return (
     <div className="banner">
       <div className="banner-content">
       {foundSchool && <div className="found-school">{foundSchool}</div>}
       </div>     
         <img src={bannerIcon} alt="Logo Icon" className="logo-icon" />
-      {/* Conditionally render the date selector */}
+      {/* conditionally render the date selector */}
       {activityData && activityData.length > 0 && (
+  <div className="select-container">
   <Select
     value={selectedDate}
     onChange={handleChange}
     options={options}
-    placeholder="日付を選択"
+    placeholder={<div classname="select-placeholder-text">日付を選択</div>}
     isSearchable={false}
     className="react-select-container"
+    classNamePrefix="custom-select"
+    styles={customStyles}
   />
+  </div>
 )}
     </div>
   );

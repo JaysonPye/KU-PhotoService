@@ -28,35 +28,34 @@
   justify-content: space-between;
 }
 
-.banner select {
+.select-container{
+  position: absolute;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  
+}
+
+.custom-select__control {
   position: absolute;
   right: 20px;
   font-weight: bold;
-  color: #EF8200; /* Set text color to orange */
-  background-color: white; /* Set background color to white */
-  background-image: url('../images/photobook-icons-calendar.svg'); /* Add your image URL here */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
+  color: #EF8200 !important;
+  background-color: white;
+  background-image: url('../images/photobook-icons-calendar.svg');
+  background-repeat: no-repeat;
   background-size: 25px 25px;
   background-position: center left;
   background-position-x: 15px;
-  padding: 12px; /* Add padding to the <select> element */
-  font-weight: bold; /* Optionally make the text bold */
-  height: 50px; /* Set the height to 70% of the banner height */
-  width: 150px; /* Set the width to your desired value */
-  border-radius: 30px; /* Add rounded corners */
-  padding-left: 40px;
+  padding: 10px;
+  font-weight: bold;
+  height: 50px;
+  width: 200px;
+  border-radius: 30px;
+  padding-left: 30px;
   border: 2px solid #EF8200;
 }
 
-/* Style the dropdown (options) */
-.banner select option {
-  background-color: white;
-  color: #EF8200;
-  font-size: 14px;
-  font-weight: bold;
-  border: 3px solid #EF8200;
-  border-radius: 30px; /* Add rounded corners */
-}
 
 
 
