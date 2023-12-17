@@ -86,13 +86,8 @@ function SeasonalPage() {
     
     <div key={index} className="activity-section" id={`activity-${activity.date.replace(/[^a-zA-Z0-9-_]/g, '-')}`}>
     <h2>{activity.name}</h2>
-    <p>Date: {activity.date} {activity.files[1].thumbnailUrl}</p>
-    {console.log(`Generated ID: activity-${activity.date.replace(/[^a-zA-Z0-9-_]/g, '-')}`)}
-
+    <p>Date: {activity.date}</p>
     <div>
-    <button onClick={() => handleDownload(activity.files[selectedImageIndex].id)}>
-      DOWNLOAD
-    </button>
     <div className="thumbnails">
       {activity.files.map((file, fileIndex) => (
         <div key={fileIndex} className="thumbnail">

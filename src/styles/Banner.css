@@ -13,7 +13,7 @@
 
 .found-school {
   position: absolute;
-  left: 10px; /* Adjust the position as needed */
+  left: 20px; /* Adjust the position as needed */
   font-weight: bold;
 }
 
@@ -25,7 +25,42 @@
 .banner-content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
+
+.banner select {
+  position: absolute;
+  right: 20px;
+  font-weight: bold;
+  color: #EF8200; /* Set text color to orange */
+  background-color: white; /* Set background color to white */
+  background-image: url('../images/photobook-icons-calendar.svg'); /* Add your image URL here */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-size: 25px 25px;
+  background-position: center left;
+  background-position-x: 15px;
+  padding: 12px; /* Add padding to the <select> element */
+  font-weight: bold; /* Optionally make the text bold */
+  height: 50px; /* Set the height to 70% of the banner height */
+  width: 150px; /* Set the width to your desired value */
+  border-radius: 30px; /* Add rounded corners */
+  padding-left: 40px;
+  border: 2px solid #EF8200;
+}
+
+/* Style the dropdown (options) */
+.banner select option {
+  background-color: white;
+  color: #EF8200;
+  font-size: 14px;
+  font-weight: bold;
+  border: 3px solid #EF8200;
+  border-radius: 30px; /* Add rounded corners */
+}
+
+
+
+
 
 /* Add mobile-specific styles */
 @media (max-width: 768px) {
