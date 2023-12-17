@@ -1,10 +1,6 @@
 /* PicturesPage.css */
 
 
-.banner{
-  position: sticky;
-}
-
 /* Mobile school name and line */
 .mobile-school-info {
   text-align: left;
@@ -28,6 +24,9 @@
 
 /* Pictures container stuff */
 .pictures-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
     text-align: center;
     background-color: #FBF2E8;
     background-image: url('../images/photobook-icons-kids.svg'); 
