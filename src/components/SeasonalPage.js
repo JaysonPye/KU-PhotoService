@@ -44,14 +44,17 @@ function SeasonalPage() {
   }, [location.state]);
 
 //Navigates to the seasonal date clicked
-  const navigateToSection = (sectionId) => {
-    console.log('searching for',sectionId)
-    const element = document.getElementById(sectionId);
-    console.log('called', element)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+const navigateToSection = (sectionId) => {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    const bannerHeight = document.querySelector('.banner').clientHeight;
+    const offset = bannerHeight;
+    const elementOffset = element.getBoundingClientRect().top + window.scrollY;
+    const scrollToY = elementOffset - offset;
+    window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+  }
+};
+
   const handleDownload = (fileId) => {
     const link = document.createElement('a');
     link.href = `https://drive.google.com/uc?export=download&id=${fileId}`;
