@@ -54,6 +54,7 @@ function Banner({foundSchool, activityData, navigateToSection}) {
       color: '#EF8200', 
       border: '2px solid #EF8200', 
       borderRadius: '30px',
+      right: '20px',
     }),
     singleValue: provided =>({
       ...provided,

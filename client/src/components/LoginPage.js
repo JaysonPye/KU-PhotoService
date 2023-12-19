@@ -4,57 +4,56 @@ import '../styles/Spinner.css';
 import '../styles/LoginPage.css';
 import loginImage from '../images/home-img-1.jpg';
 import Banner from './Banner';
+
 function LoginPage() {
     const [code, setCode] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     // Handles login submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
       setLoading(true);
   
-      const url = 'http://localhost:5000/'; // TODO: Replace with the actual endpoint
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ code }),
+        });
   
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `code=${code}`,
-      })
-        .then((response) => {
-          if (response.ok) {
-            console.log('Login successful');
-            response.json().then((data) => {
-              if (data.activities) {
-                // It's a seasonal login with activities
-                // Send data.activities to the backend
-              navigate(`/seasonal-pictures`, { state: { activities: data.activities, foundSchool: data.school } });
-
-              } else if (data.folder_id) {
-                // party page
-                navigate(`/pictures/${data.folder_id}`, { state: { foundSchool: data.school } });
-              } else {
-                // Handle any other type of response
-                console.error('Unknown response type');
-              }
+        if (response.ok) {
+          const data = await response.json();
+  
+          if (data.activities) {
+            // It's a seasonal login with activities
+            navigate(`/seasonal-pictures`, {
+              state: { activities: data.activities, foundSchool: data.school },
+            });
+          } else if (data.folder_id) {
+            // party page
+            navigate(`/pictures/${data.folder_id}`, {
+              state: { foundSchool: data.school },
             });
           } else {
-            console.error('Login failed');
-            setErrorMessage('コードが間違っています');
+            // Handle any other type of response
+            console.error('Unknown response type');
           }
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          setErrorMessage('An error occurred. Please try again later.');
-        })
-        .finally(() => {
-          setTimeout(() => {
-            setErrorMessage(''); // Clear error message after 3 seconds
-          }, 3000);
-          setLoading(false); // Set loading to false after the request (success or failure)
-        });
+        } else {
+          console.error('Login failed');
+          setErrorMessage('コードが間違っています');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setErrorMessage('An error occurred. Please try again later.');
+      } finally {
+        setTimeout(() => {
+          setErrorMessage(''); // Clear error message after 3 seconds
+        }, 3000);
+        setLoading(false); // Set loading to false after the request (success or failure)
+      }
   
       setCode('');
     };

@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.21fd6383.css",
+    "main.js": "/static/js/main.1b12f5fd.js",
+    "static/js/512.8d5bf7af.chunk.js": "/static/js/512.8d5bf7af.chunk.js",
+    "static/media/home-img-1.jpg": "/static/media/home-img-1.00c18a2ff2a909f3f472.jpg",
+    "static/media/banner-icon.svg": "/static/media/banner-icon.78d69a200dd8ff7196cd09aa6a6dcc7f.svg",
+    "static/media/photobook-icons-kids.svg": "/static/media/photobook-icons-kids.fb50990501dc3e9c0da0.svg",
+    "static/media/photobook-icons-calendar.svg": "/static/media/photobook-icons-calendar.6846f096c5f3516cc304.svg",
+    "static/media/photobook-download-small-orange.svg": "/static/media/photobook-download-small-orange.dd3a5493757ed18ecd49.svg",
+    "static/media/photobook-download-small.svg": "/static/media/photobook-download-small.22a979a2bbd2d2a382d0.svg",
+    "static/media/photobook-icons-key.svg": "/static/media/photobook-icons-key.19f25dd8d8a28d944ebb.svg",
+    "static/media/photobook-icons-exit.svg": "/static/media/photobook-icons-exit.ff32ef47a67bda3391bd8dc1edce9377.svg",
+    "static/media/photobook-icons-left.svg": "/static/media/photobook-icons-left.38a98a572e49e3d396ba8d5bbdac0c7b.svg",
+    "static/media/photobook-icons-right.svg": "/static/media/photobook-icons-right.7f0c0f3b5714ebda7b3c89058a00c55c.svg",
+    "index.html": "/index.html",
+    "main.21fd6383.css.map": "/static/css/main.21fd6383.css.map",
+    "main.1b12f5fd.js.map": "/static/js/main.1b12f5fd.js.map",
+    "512.8d5bf7af.chunk.js.map": "/static/js/512.8d5bf7af.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.21fd6383.css",
+    "static/js/main.1b12f5fd.js"
+  ]
+}
