@@ -1,5 +1,8 @@
 const { google } = require('googleapis');
-const credentials = require('./credentials.json');
+const path = require('path');
+const credentialsPath = path.join(__dirname, '..', 'credentials.json');
+const credentials = require(credentialsPath);
+
 
 // Function to fetch pictures in a folder
 async function fetchPicturesInFolder(folderId) {
