@@ -12,14 +12,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve the static files from the 'client/public' directory (including index.html)
-app.use(express.static(path.join(__dirname, '../client/public')));
+app.use(express.static(path.join(__dirname, './client/build')));
 
 // Use the API routes
 app.use('/api', apiRoutes);
 
 // Define a route to serve your React app for all other routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/public/index.html'));
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
 app.listen(port, () => {
