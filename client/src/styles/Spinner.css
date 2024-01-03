@@ -13,3 +13,10 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  /* Media query for mobile devices */
+@media (max-width: 768px) {
+  .spinner {
+      display: none;
+  }
+}

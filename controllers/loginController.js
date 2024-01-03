@@ -19,103 +19,168 @@ async function handleLogin(req, res) {
   
     if (code.length <= 8) {
       const partyData = await partyLogin(code);
-      if (partyData) {
+      if (partyData.success) {
         res.json(partyData);
       } else {
-        res.status(401).json({ success: false, message: 'Invalid login code' });
+        res.status(401).json({ success: false, message: partyData.message });
       }
     } else {
       const seasonalData = await seasonalLogin(code);
-      if (seasonalData) {
+      if (seasonalData.success) {
         res.json(seasonalData);
       } else {
-        res.status(401).json({ success: false, message: 'Invalid login code' });
+        res.status(401).json({ success: false, message: seasonalData.message });
       }
     }
-  }
+}
 
-// Updated partyLogin function
-async function partyLogin(code) {
+  async function seasonalLogin(code){
+try{
+  const spreadsheetTabs = await getAllTabNames(sheetID);
+  //check if SSData tab exists
+  if(!spreadsheetTabs.includes('SSData')){
+    return{success: false, message: 'SSData tab not found in the spreadsheet'};
+  }
+  //Get SSData values
+  const ssdataValues = await fetchSheetData('SSData');
+  let foundSchool = null;
+  //Iterate rows in ssdata and check for login code in column one
+  //If it exists get the school name from the next column
+  for(const row of ssdataValues){
+    if(row.includes(code)){
+      
+      foundSchool=row[2];
+      break;
+    }
+  }
+  if (foundSchool) {
+    // Get names and dates of activities
+    const activitiesData = await getActivityNameDates();
+    const activities = activitiesData.activity_names_dates || [];
+  
+    const schoolSheetData = await fetchSheetData(foundSchool);
+  
+    if (schoolSheetData && schoolSheetData.length > 1) {
+      const folderIdRow = schoolSheetData[1];
+  
+      // Iterate activities and get folder_id if available
+      const filteredActivities = [];
+      for (const activity of activities) {
+        const dateIndex = schoolSheetData[0].indexOf(activity.date);
+        if (dateIndex !== -1) {
+          const folderId = folderIdRow[dateIndex];
+          if (folderId) {
+            activity.folder_id = folderId;
+            filteredActivities.push(activity);
+          }
+        }
+      }
+  
+      return { success: true, school: foundSchool, activities: filteredActivities };
+    } else {
+      return { success: false, message: 'School data format error or missing' };
+    }
+  } else {
+    return { success: false, message: 'Incorrect Login Code' };
+  }
+} catch (error) {
+  console.error('Error:', error);
+  return { success: false, message: 'An error occurred' };
+}
+}
+  async function partyLogin(code) {
   try {
     // Fetch data from 'displayVariables' sheet
     const displayVariablesData = await fetchSheetData('displayVariables');
-    const displayVariables = displayVariablesData[0].slice(1);
-    console.log('got displayvariables data');
-    // Get all tab names in the spreadsheet
+    const displayVariables = [];
+    for (const row of displayVariablesData) {
+      if (row.length > 0 && typeof row[0] === 'string') {
+        const tabName = row[0].trim();
+        if (tabName.length > 0) {
+          displayVariables.push(tabName);
+        }
+      }
+    }
     const tabNames = await getAllTabNames(sheetID);
-
     // Compare displayVariables with tab names and get matching tabs
     const matchingTabs = displayVariables.filter(tabName => tabNames.includes(tabName));
+    if (matchingTabs.length === 0) {
+      return { success: false, message: 'No matching code found' };
+    }
+    for (const tabName of matchingTabs) {
+      // Fetch data from the current matching tab
+      const tabData = await fetchSheetData(tabName);
+      for (let rowIndex = 0; rowIndex < tabData.length; rowIndex++) {
+        const row = tabData[rowIndex];
+        const columnIndex = row.indexOf(code);
+        if (columnIndex !== -1) {
+          const schoolName = tabData[rowIndex][0].trim();
+          const partyName = tabData[0][columnIndex].trim();
 
-    if (matchingTabs.length > 0) {
-      for (const tabName of matchingTabs) {
-        // Fetch data from the current matching tab
-        const tabData = await fetchSheetData(sheetID, tabName);
+          const schoolSheetData = await fetchSheetData(schoolName);
 
-        // Iterate through all rows and columns to find the matching code
-        for (let rowIndex = 0; rowIndex < tabData.length; rowIndex++) {
-          const row = tabData[rowIndex];
+          if (schoolSheetData && schoolSheetData[0]) {
+            const headers = schoolSheetData[0];
+            const headerIndex = headers.indexOf(partyName);
 
-          // Check if the code exists in the row
-          const columnIndex = row.indexOf(code);
-          if (columnIndex !== -1) {
-            // Get the school name from the leftmost column (column A)
-            const schoolName = tabData[rowIndex][0].trim();
+            if (headerIndex !== -1) {
+              const folder_id = schoolSheetData[1][headerIndex];
 
-            // Get the party name from the header of the current column
-            const partyName = tabData[0][columnIndex].trim();
-
-            // Print the school name and party name to the console
-            console.log(`School Name: ${schoolName}, Party Name: ${partyName}`);
-            return { success: true, schoolName, partyName };
+              if (folder_id) {
+                return {
+                  success: true,
+                  folder_id,
+                  school: schoolName,
+                };
+              }
+            }
           }
+          return { success: false, message: "No matching code found"};
         }
       }
     }
 
-    res.status(401).json({ success: false, message: 'No matching code found' });
+    return { success: false, message: 'No matching code found' };
   } catch (error) {
     console.error('Error:', error);
     return { success: false, message: 'An error occurred' };
   }
 }
 
-  // Function to get activity names and dates
-  async function getActivityNameDates() {
-    try {
-      const gc = await gspread.authorize(credentials);
-      const spreadsheet = await gc.open('photositeupdated');
-      const seasonalNamesSheet = await spreadsheet.worksheet('seasonalNames');
-      const values = await seasonalNamesSheet.getRows();
-  
-      const activityNamesDates = [];
-      for (const row of values) {
-        // Split the row into date and name
-        if (row[0] && row[1]) {
-          const date = row[0].trim();
-          const name = row[1].trim();
-          activityNamesDates.push({ date, name });
-        }
+
+async function getActivityNameDates() {
+  try {
+    // Fetch data from 'seasonalNames' sheet
+    const seasonalNamesData = await fetchSheetData('seasonalNames');
+    const activityNamesDates = [];
+
+    for (const row of seasonalNamesData) {
+      // Check if the row has at least two elements and they are not empty
+      if (row.length >= 2 && row[0].trim() && row[1].trim()) {
+        const date = row[0].trim();
+        const name = row[1].trim();
+        activityNamesDates.push({ date, name });
+
       }
-  
-      return { success: true, activity_names_dates: activityNamesDates };
-    } catch (error) {
-      console.error('Error:', error);
-      return { success: false, message: 'An error occurred' };
     }
+
+    return { success: true, activity_names_dates: activityNamesDates };
+  } catch (error) {
+    console.error('Error:', error);
+    return { success: false, message: 'An error occurred' };
   }
+}
 //Get data from a specified sheet
   async function fetchSheetData(sheetName) {
     try {
       const authClient = await auth.getClient();
       const response = await sheets.spreadsheets.values.get({
         auth: authClient,
-        spreadsheetId: sheetID, // Use spreadsheetId here
+        spreadsheetId: sheetID,
         range: sheetName,
       });
   
       const values = response.data.values;
-      console.log('GOOD');
       return values;
     } catch (error) {
       console.error('Error:', error);

@@ -27,7 +27,7 @@ function PicturesPage() {
   useEffect(() => {
     console.log('Fetching pictures for folderId:', folderId);
     // Make a GET request to /pictures endpoint with the folderId
-    fetch(`http://localhost:5000/pictures?folder_id=${folderId}`)
+    fetch(`/api/pictures?folder_id=${folderId}`)
       .then((response) => response.json())
       .then((data) => setFiles(data.files))
       .catch((error) => console.error('Error:', error));

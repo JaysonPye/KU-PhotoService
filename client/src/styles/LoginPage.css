@@ -76,12 +76,12 @@ input[type="password"] {
   background-repeat: no-repeat;
   background-position: center left;
   background-position-x: 10px;
+  padding-left: 45px;
 }
 
 input[type="password"]:focus {
   border: 3px solid #EF8200; /* Thicker orange border when focused */
   outline: none; /* Remove the default blue outline */
-  background-image: none;
 }
 h2 {
   font-size: 20px; /* Adjust the font size for h2 */

@@ -15,7 +15,8 @@ function SeasonalPage() {
 
   useEffect(() => {
     function fetchSeasonalPictures() {
-      fetch('http://localhost:5000/seasonal-pictures', {
+      console.log("calling fetch pictures");
+      fetch('/api/seasonal-pictures', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

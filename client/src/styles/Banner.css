@@ -59,15 +59,19 @@
 
 
 
-
-
 /* Add mobile-specific styles */
 @media (max-width: 768px) {
   .found-school {
-    display: none; /* Hide the school name */
+    display: none; 
   }
-
+  .custom-select__control {
+    height: 40px;
+    width: 150px;
+    background-size: 20px 20px; 
+    font-size: 14px; 
+    padding-left: 25px;
+  }
   .banner {
-    height: 60px; /* Adjust the banner height for mobile view */
+    height: 60px;
   }
 }
