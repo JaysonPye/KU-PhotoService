@@ -163,11 +163,6 @@
     z-index: 1000;
   }
   
-  .modal img {
-    max-width: 100%; /* Adjust the maximum width as needed */
-    max-height: 100vh; /* Adjust the maximum height as needed */
-    object-fit: contain; /* Maintain aspect ratio and fit within the max-height */
-  }
   .close-button {
     position: absolute;
     top: 10%; /* Adjust the top position as needed */
@@ -228,10 +223,12 @@
 
   /* IMAGE GALLERY STYLES */
 
-  .image-gallery-slide img {
-    max-width: 70%; /* Adjust the maximum width as needed */
-    max-height: 70vh; /* Adjust the maximum height as needed */
-    object-fit: contain; /* Maintain aspect ratio and fit within the max dimensions */
+  .custom-iframe {
+    width: 1000px;
+    height: 530px;
+    max-width: 70%; /* Use a maximum width of 100% */
+    max-height: 70vh; /* Let the height adjust automatically to maintain aspect ratio */
+    object-fit: contain;
     border: 5px solid white;
   }
 
@@ -319,5 +316,8 @@
   /* Remove the image scaling on hover */
   .thumbnail:hover img {
     transform: none;
+  }
+  .custom-iframe {
+    max-height: 46vh;
   }
 }

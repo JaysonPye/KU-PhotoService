@@ -25,7 +25,6 @@ function PicturesPage() {
   };
 
   useEffect(() => {
-    console.log('Fetching pictures for folderId:', folderId);
     // Make a GET request to /pictures endpoint with the folderId
     fetch(`/api/pictures?folder_id=${folderId}`)
       .then((response) => response.json())
@@ -34,8 +33,14 @@ function PicturesPage() {
   }, [folderId]);
 
   const images = files.map((file) => ({
-    original: file.imageUrl,
-    thumbnail: file.thumbnailUrl,
+// Render an iframe, height/width are in there for styling purposes in backend
+    renderItem: () => (
+      <iframe
+        src={`https://drive.google.com/file/d/${file.id}/preview`}
+        title={`Embedded iframe - ${file.name}`}
+        className="custom-iframe"
+      ></iframe>
+    ),
   }));
 
   const closeModal = () => {

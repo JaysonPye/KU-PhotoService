@@ -67,7 +67,6 @@ function LoginPage() {
           <div className="login-content">
             <h1>Welcome back,</h1>
             <h2>パスワード</h2>
-            {loading && <div className="spinner"></div>}
             {errorMessage && <div className="error-message">{errorMessage}</div>}
             <form onSubmit={handleSubmit}>
               <label htmlFor="code"></label>
@@ -79,9 +78,11 @@ function LoginPage() {
                 onChange={(e) => setCode(e.target.value)}
                 required
                 className="login-input"
+                
               />
               <br />
               <br />
+                          {loading && <div className="spinner"></div>}
               <button className="login-button" type="submit">
                 ログイン
               </button>

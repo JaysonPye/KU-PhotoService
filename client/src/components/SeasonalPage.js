@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/PicturesPage.css';
 import Gallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
@@ -12,10 +12,13 @@ function SeasonalPage() {
   const [selectedActivityIndex, setSelectedActivityIndex] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [activityData, setActivityData] = useState([]);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
+
     function fetchSeasonalPictures() {
-      console.log("calling fetch pictures");
+
       fetch('/api/seasonal-pictures', {
         method: 'POST',
         headers: {
@@ -41,8 +44,10 @@ function SeasonalPage() {
 
     if (location.state && location.state.activities) {
       fetchSeasonalPictures();
+    }else{
+      navigate('/');
     }
-  }, [location.state]);
+  }, [location.state, navigate]);
 
 //Navigates to the seasonal date clicked
 const navigateToSection = (sectionId) => {
