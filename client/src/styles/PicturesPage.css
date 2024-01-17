@@ -224,10 +224,10 @@
   /* IMAGE GALLERY STYLES */
 
   .custom-iframe {
-    width: 1000px;
-    height: 530px;
-    max-width: 70%; /* Use a maximum width of 100% */
-    max-height: 70vh; /* Let the height adjust automatically to maintain aspect ratio */
+    width: 1280px;
+    height: 800px;
+    max-width: 80%; /* Use a maximum width of 100% */
+    max-height: 80vh; /* Let the height adjust automatically to maintain aspect ratio */
     object-fit: contain;
     border: 5px solid white;
   }
@@ -251,7 +251,7 @@
 
 .image-gallery-right-nav svg {
   stroke-width: 2px;
-  box-shadow: none IM !important;
+  box-shadow: none;
 }
 
 /* MOBILE */
@@ -318,6 +318,17 @@
     transform: none;
   }
   .custom-iframe {
-    max-height: 46vh;
+    max-height: 60vh;
+  }
+
+  /* same in mobile as its overwritten by base */
+  .image-gallery-left-nav svg {
+    stroke-width: 2px;
+    box-shadow: none;
+  }
+  
+  .image-gallery-right-nav svg {
+    stroke-width: 2px;
+    box-shadow: none;
   }
 }

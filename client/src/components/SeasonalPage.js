@@ -135,10 +135,15 @@ const navigateToSection = (sectionId) => {
               DOWNLOAD
             </button>
             <Gallery
-              items={activityData[selectedActivityIndex].files.map((file) => ({
-                original: file.imageUrl,
-                thumbnail: file.thumbnailUrl,
-              }))}
+            items={activityData[selectedActivityIndex].files.map((file) => ({
+              renderItem: () => (
+                <iframe
+                src={`https://drive.google.com/file/d/${file.id}/preview`}
+                title={`Embedded iframe - ${file.name}`}
+                className="custom-iframe"
+              ></iframe>
+              ),
+            }))}
               startIndex={selectedImageIndex}
               showIndex={false}
               showThumbnails={false}
