@@ -163,16 +163,20 @@
     z-index: 1000;
   }
   
+/* Close button positioning */
+.picture-container {
+  position: relative;
+  display: inline-block;
+}
+  /* Position the "Close" button */
   .close-button {
     position: absolute;
-    top: 10%; /* Adjust the top position as needed */
-    right: 25%; /* Adjust the right position as needed */
+    top: 20px; /* Adjust the top position to move it up by 10 pixels */
+    right: 20px; /* You can adjust the right position as needed */
     font-size: 24px;
     cursor: pointer;
     z-index: 2;
-
     border: none;
-
     color: white;
     width: 28px;
     height: 28px;
@@ -198,7 +202,7 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 10%;
+    bottom: 5%;
     z-index: 1;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; /* Include opacity transition */
     display: flex;

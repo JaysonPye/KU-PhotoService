@@ -55,13 +55,12 @@ try{
   }
   if (foundSchool) {
     // Get names and dates of activities
-    const activitiesData = await getActivityNameDates();
+    const activitiesData = await getActivityNameDates(foundSchool);
     const activities = activitiesData.activity_names_dates || [];
-  
     const schoolSheetData = await fetchSheetData(foundSchool);
   
     if (schoolSheetData && schoolSheetData.length > 1) {
-      const folderIdRow = schoolSheetData[1];
+      const folderIdRow = schoolSheetData[3];
   
       // Iterate activities and get folder_id if available
       const filteredActivities = [];
@@ -147,20 +146,21 @@ try{
   }
 }
 
-
-async function getActivityNameDates() {
+async function getActivityNameDates(foundSchool) {
   try {
-    // Fetch data from 'seasonalNames' sheet
-    const seasonalNamesData = await fetchSheetData('seasonalNames');
+    // Fetch data from schools sheet
+    const seasonalNamesData = await fetchSheetData(foundSchool);
     const activityNamesDates = [];
 
-    for (const row of seasonalNamesData) {
-      // Check if the row has at least two elements and they are not empty
-      if (row.length >= 2 && row[0].trim() && row[1].trim()) {
-        const date = row[0].trim();
-        const name = row[1].trim();
+    // Assuming each column represents an event
+    for (let columnIndex = 0; columnIndex < seasonalNamesData[0].length; columnIndex++) {
+      const column = seasonalNamesData.map(row => row[columnIndex]);
+      
+      // Check if the column has at least 4 non-empty values (parties will have two)
+      if (column.length >= 4 && column[1] && column[2] && column[3]) {
+        const date = column[1].trim();
+        const name = column[2].trim();
         activityNamesDates.push({ date, name });
-
       }
     }
 
@@ -169,6 +169,7 @@ async function getActivityNameDates() {
     console.error('Error:', error);
     return { success: false, message: 'An error occurred' };
   }
+
 }
 //Get data from a specified sheet
   async function fetchSheetData(sheetName) {

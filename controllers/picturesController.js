@@ -6,9 +6,6 @@ const auth = new google.auth.GoogleAuth({credentials, scopes: ['https://www.goog
 });
 const drive = google.drive({ version: 'v3', auth });
 
-
-
-
 async function fetchPicturesInFolder(folderId) {
   try {
       const response = await drive.files.list({
@@ -26,6 +23,7 @@ async function fetchPicturesInFolder(folderId) {
           id: file.id,
           mimeType: file.mimeType,
           thumbnailUrl: `https://drive.google.com/thumbnail?id=${file.id}`,
+          //imageUrl is redundant as of 2024 drive changes
           imageUrl: `https://drive.google.com/uc?id=${file.id}`
       }));
   } catch (error) {
@@ -44,9 +42,7 @@ async function getPictures(req, res){
       q: `'${folderId}' in parents and mimeType='image/jpeg'`,
       fields: 'files(id, name, mimeType)'
   });
-  console.log("called await drivefileslist");
   const files = response.data.files;
-  console.log("response data files set");
   if (!files || files.length === 0) {
     return res.status(404).json({ success: false, message: 'No pictures found' });
 }
@@ -74,7 +70,6 @@ async function getPictures(req, res){
 async function getSeasonalPictures(req, res) {
   try {
     const data = req.body;
-    console.log("called getseasonalpictures");
     const activities = data.activities || [];
     const updatedActivities = [];
 
