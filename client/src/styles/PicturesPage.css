@@ -188,12 +188,12 @@
   }
   
   .close-button:hover {
-    transform: scale(1.1); /* Scale up by 10% on hover */
+    transform: scale(1.1); 
   }
 
   .download-button {
   
-    background-color: #EF8200; /* Set the background color to match the modal */
+    background-color: #EF8200; 
     color: white; /* White text color */
     border: 2px solid white; /* Add a thick white border */
     padding: 6px 35px;
