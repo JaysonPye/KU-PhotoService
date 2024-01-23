@@ -34,7 +34,6 @@ function SeasonalPage() {
           return response.json();
         })
         .then((data) => {
-          console.log('Seasonal Pictures:', data);
           setActivityData(data);
         })
         .catch((error) => {
@@ -104,7 +103,7 @@ const navigateToSection = (sectionId) => {
             <img
               src={file.thumbnailUrl}
               alt={`Thumbnail ${fileIndex}`}
-              onClick={() => { setSelectedImageIndex(fileIndex); console.log(fileIndex);     setSelectedActivityIndex(index);}}
+              onClick={() => { setSelectedImageIndex(fileIndex); setSelectedActivityIndex(index);}}
               
             />
           </div>
