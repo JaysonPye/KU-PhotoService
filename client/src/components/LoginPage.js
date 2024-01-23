@@ -16,7 +16,7 @@ function LoginPage() {
       setLoading(true);
   
       try {
-        const response = await fetch('/api/login', {
+        const response = await fetch('api/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ function LoginPage() {
               <br />
               <br />
                           {loading && <div className="spinner"></div>}
-              <button className="login-button" type="submit">
+              <button className="login-button"cd type="submit">
                 ログイン
               </button>
             </form>
