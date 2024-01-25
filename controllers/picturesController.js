@@ -23,17 +23,15 @@ async function fetchPicturesInFolder(folderId) {
           id: file.id,
           mimeType: file.mimeType,
           thumbnailUrl: `https://drive.google.com/thumbnail?id=${file.id}`,
-          //imageUrl is redundant as of 2024 drive changes
-          imageUrl: `https://drive.google.com/uc?id=${file.id}`
       }));
   } catch (error) {
       console.error('Error:', error);
-      throw error; // Re-throw the error to handle it in the calling function
+      throw error; // re-throw the error to handle it in the calling function
   }
 }
 
 
-// Function to fetch pictures in a folder
+// fetch pictures in a folder
 async function getPictures(req, res){
   console.log("called");
   const folderId = req.query.folder_id;
@@ -46,7 +44,7 @@ async function getPictures(req, res){
   if (!files || files.length === 0) {
     return res.status(404).json({ success: false, message: 'No pictures found' });
 }
-        // Create a list of file information
+        // create a list of file information
         const fileList = files.map(file => {
           return {
               name: file.name,
@@ -57,7 +55,7 @@ async function getPictures(req, res){
           };
       });
 
-      // Return a JSON response with the list of files
+      // return a JSON response with the list of files
       res.json({ files: fileList });
   } catch (error) {
       console.error('Error:', error);
@@ -65,29 +63,32 @@ async function getPictures(req, res){
   }
 }
 
-
-// Route handler for /seasonal-pictures
+// seasonal-pictures handler
 async function getSeasonalPictures(req, res) {
   try {
     const data = req.body;
     const activities = data.activities || [];
-    const updatedActivities = [];
-
-    for (const activity of activities) {
+    
+    // uses a list of JS promises to gather picture information
+    const fetchPromises = activities.map(async (activity) => {
       const folderId = activity.folder_id;
       if (folderId) {
         const files = await fetchPicturesInFolder(folderId);
         activity.files = files;
-        updatedActivities.push(activity);
+        console.log(folderId);
       }
-    }
+    });
 
-    res.status(200).json(updatedActivities);
+    // wait for promises
+    await Promise.all(fetchPromises);
+    console.log("done");
+    res.status(200).json(activities);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ success: false, message: 'An error occurred' });
   }
 }
+
 
 
 

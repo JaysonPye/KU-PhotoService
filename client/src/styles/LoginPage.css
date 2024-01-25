@@ -13,8 +13,8 @@ html{
   height: calc(100vh - 100px);
   background-image: url('../images/photobook-icons-kids.svg'); 
   background-repeat: no-repeat;
-  background-size: 30%; /* Adjust the background size as needed */
-  background-position: left bottom; /* Position the image at the bottom left */
+  background-size: 30%;
+  background-position: left bottom;
 }
 
 .login-box {
@@ -23,7 +23,7 @@ html{
   border-radius: 15px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 60%; /* Adjust the width to 70% for the login box */
+  width: 60%;
   margin-top: 10vh;
   border: 2px solid #EF8200;
   border-radius: 5px;
@@ -31,47 +31,40 @@ html{
   justify-content: space-between;
   align-items: center;
   position: relative;
-  overflow: hidden; /* Hide overflowing content */
+  overflow: hidden;
   min-height: 30vh;
 }
 
 /* LoginPage.css */
 .login-content {
-  flex: 1; /* Make login content take up remaining space */
-  padding-right: 20px; /* Add some spacing between login content and image */
+  flex: 1;
+  padding-right: 20px;
 }
 
 .login-image-container {
-  flex: 0 0 30%; /* Take up 30% of the available width */
-  max-width: 30%; /* Set a maximum width if needed */
-  position: relative; /* Allow relative positioning within the container */
-  overflow: hidden; /* Hide overflowing content */
-  height: 100%; /* Ensure the container takes the full height of the login box */
-  margin: -25px; /* Remove any margin on top and bottom, but keep -10px left and right margin */
-
+  flex: 0 0 30%;
+  max-width: 30%;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  margin: -25px;
 }
 
 .login-image {
-  width: 100%; /* Ensure the image fills its container */
-  height: 100%; /* Make the image take the full height of the container */
-  object-fit: cover; /* Maintain aspect ratio and cover the container */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-
-
-
-
 /* Input and buttons */
-
-
 input[type="password"] {
-  border: 2px solid #EF8200; /* Harder orange border */
-  border-radius: 15px; /* Rounded edges */
-  padding: 10px; /* Adjust the padding for height and width */
-  width: 80%; /* Make the input field 100% width of its container */
-  height: 30px; /* Adjust the height as needed */
-  font-size: 16px; /* Adjust the font size as needed */
-  background-image: url('../images/photobook-icons-key.svg'); /* Replace with the correct path to your key icon image */
+  border: 2px solid #EF8200;
+  border-radius: 15px;
+  padding: 10px;
+  width: 80%;
+  height: 30px;
+  font-size: 16px;
+  background-image: url('../images/photobook-icons-key.svg');
   background-size: 25px 25px;
   background-repeat: no-repeat;
   background-position: center left;
@@ -80,31 +73,32 @@ input[type="password"] {
 }
 
 input[type="password"]:focus {
-  border: 3px solid #EF8200; /* Thicker orange border when focused */
-  outline: none; /* Remove the default blue outline */
+  border: 3px solid #EF8200;
+  outline: none;
 }
+
 h2 {
-  font-size: 20px; /* Adjust the font size for h2 */
+  font-size: 20px;
 }
+
   /* Updated styles for the login button */
   .login-button {
-    background-color: #EF8200; /* Hard orange color for login button */
+    background-color: #EF8200; 
     color: white;
     padding: 15px 70px;
     border: none;
-    border-radius: 15px; /* Rounded edges */
+    border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    font-weight: bold; /* Make the text bold */
+    font-weight: bold; 
   }
   
   .login-button:hover {
-    background-color: #D76F00; /* Darker orange color on hover */
+    background-color: #D76F00;
   }
   
-  /* Updated styles for the error message */
   .error-message {
-    color: #D76F00; /* Red color for error message */
+    color: #D76F00; 
     margin-top: 10px;
     font-size: 14px;
     
@@ -113,26 +107,25 @@ h2 {
   /* Mobile Styles */
 @media (max-width: 768px) {
   .login-container {
-    background-size: 60%; /* Adjust the background size for mobile */
-    background-position: center bottom; /* Position the image at the center bottom */
+    background-size: 60%; 
+    background-position: center bottom; 
   }
   .login-container::after {
     content: "";
     position: absolute;
-    top: 100%; /* Position it below the .login-container */
+    top: 100%; 
     left: 0;
     width: 100%;
-    height: 100vh; /* Fill the remaining viewport height */
-    background-color: #FBF2E8; /* Set the background color you want */
+    height: 100vh; 
+    background-color: #FBF2E8; 
   }
 
   .login-box {
-    background-color: transparent; /* Make the login box background transparent */
-    box-shadow: none; /* Remove the box shadow */
-    border: none; /* Remove the border */
-    width: 100%; /* Make the login box full width */
-    padding: 0; /* Remove padding */
- /* Adjust the min-height for full-screen display */
+    background-color: transparent; 
+    box-shadow: none; 
+    border: none; 
+    width: 100%; 
+    padding: 0; 
   }
 
   .login-image-container {
@@ -146,10 +139,10 @@ h2 {
   }
 
   h2 {
-    font-size: 18px; /* Adjust the font size for h2 on mobile */
+    font-size: 18px; 
   }
 
   .login-button {
-    padding: 15px 50px; /* Adjust padding for the login button on mobile */
+    padding: 15px 50px; 
   }
 }
