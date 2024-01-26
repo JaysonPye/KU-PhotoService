@@ -28,7 +28,6 @@ function SeasonalPage() {
       })
         .then((response) => {
           if (!response.ok) {
-            console.error('Error fetching seasonal pictures:', response.status);
             throw new Error('Error fetching seasonal pictures');
           }
           return response.json();

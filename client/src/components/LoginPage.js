@@ -39,14 +39,11 @@ function LoginPage() {
             });
           } else {
             // Handle any other type of response
-            console.error('Unknown response type');
           }
         } else {
-          console.error('Login failed');
           setErrorMessage('コードが間違っています');
         }
       } catch (error) {
-        console.error('Error:', error);
         setErrorMessage('An error occurred. Please try again later.');
       } finally {
         setTimeout(() => {
