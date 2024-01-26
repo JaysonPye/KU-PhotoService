@@ -6,14 +6,14 @@
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center; /* Center the content horizontally */
+  justify-content: center; 
   height: 90px;
-  color: white; /* Set the text color to white */
+  color: white; 
 }
 
 .found-school {
   position: absolute;
-  left: 20px; /* Adjust the position as needed */
+  left: 20px; 
   font-weight: bold;
 }
 
@@ -59,12 +59,12 @@
 
 
 
-/* Add mobile-specific styles */
+/* mobile-specific styles */
 @media (max-width: 768px) {
   .banner {
     height: 60px;
-    justify-content: flex-start; /* Align content to the left */
-    padding-left: 10px; /* Add some padding to the left */
+    justify-content: flex-start; 
+    padding-left: 10px;
   }
   .found-school {
     display: none; 

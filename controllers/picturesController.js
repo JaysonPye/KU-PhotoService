@@ -62,33 +62,48 @@ async function getPictures(req, res){
       res.status(500).json({ success: false, message: 'An error occurred' });
   }
 }
-
 // seasonal-pictures handler
 async function getSeasonalPictures(req, res) {
   try {
     const data = req.body;
     const activities = data.activities || [];
     
+    // Create an array to store successful activities
+    const successfulActivities = [];
+
     // uses a list of JS promises to gather picture information
     const fetchPromises = activities.map(async (activity) => {
       const folderId = activity.folder_id;
       if (folderId) {
-        const files = await fetchPicturesInFolder(folderId);
-        activity.files = files;
-        console.log(folderId);
+        try {
+          const files = await fetchPicturesInFolder(folderId);
+          activity.files = files;
+          console.log(folderId);
+          // If the promise succeeded, add the activity to the successfulActivities array
+          successfulActivities.push(activity);
+        } catch (error) {
+          // Log the error, but don't re-throw it
+          console.error('Error fetching pictures for folder:', error);
+        }
       }
     });
 
     // wait for promises
     await Promise.all(fetchPromises);
     console.log("done");
-    res.status(200).json(activities);
+
+    // Check if no successful activities were found
+    if (successfulActivities.length === 0) {
+      return res.status(404).json({ success: false, message: 'No valid activities found' });
+    }
+
+    // Return only the successful activities
+    res.status(200).json(successfulActivities);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ success: false, message: 'An error occurred' });
   }
 }
-
 
 
 

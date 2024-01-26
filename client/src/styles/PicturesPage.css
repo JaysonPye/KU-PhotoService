@@ -220,6 +220,13 @@
     margin-left: 20px; 
   }
   
+  .no-content-message{
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #EF8200;
+    
+  }
   .download-button:hover {
     background-color: #D76F00;
     transform: translateX(-50%) scale(1.05);

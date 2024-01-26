@@ -13,6 +13,7 @@ function SeasonalPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [activityData, setActivityData] = useState([]);
   const navigate = useNavigate();
+  const [dataFetched, setDataFetched] = useState(false);
 
 
   useEffect(() => {
@@ -34,9 +35,10 @@ function SeasonalPage() {
         })
         .then((data) => {
           setActivityData(data);
+          setDataFetched(true); 
         })
         .catch((error) => {
-          console.error('Error fetching seasonal pictures:', error);
+          setDataFetched(true); 
         });
     }
 
@@ -81,7 +83,6 @@ const navigateToSection = (sectionId) => {
   ) : (
     <Banner foundSchool={foundSchool} />
   )}
-  
       {/* render school name based on mobile view */}
       {window.innerWidth <= 768 && foundSchool && (
         <div className="mobile-school-info">
@@ -89,6 +90,13 @@ const navigateToSection = (sectionId) => {
           <hr className="mobile-divider" />
         </div>
       )}
+          {/* Check if activityData is empty */}
+    {dataFetched && activityData.length === 0 && (
+      <div className="no-content-message">
+        <br /><br /><br />
+        There don't seem to be any photos available right now, please check later.
+      </div>
+    )}
   {activityData.map((activity, index) => (
     
     <div key={index} className="activity-section" id={`activity-${activity.date.replace(/[^a-zA-Z0-9-_]/g, '-')}`}>
@@ -118,9 +126,8 @@ const navigateToSection = (sectionId) => {
         </div>
       ))}
     </div>
-  </div>
-  
-  </div>
+</div>
+</div>
 ))}
       {selectedImageIndex !== null && (
         <div className="modal-container">
@@ -154,6 +161,7 @@ const navigateToSection = (sectionId) => {
             />
           </div>
         </div>
+        
       )}
     </div>
   );

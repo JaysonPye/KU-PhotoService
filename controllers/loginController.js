@@ -13,7 +13,7 @@ const auth = new google.auth.GoogleAuth({
 });
 
 
-// Function to handle login logic
+// function to handle login logic
 async function handleLogin(req, res) {
     const { code } = req.body;
   
@@ -185,7 +185,7 @@ async function getActivityNameDates(foundSchool) {
       return values;
     } catch (error) {
       console.error('Error:', error);
-      throw error; // Handle the error as needed
+      throw error;
     }
   }
 //Get a list of tabs in the sheet
@@ -202,7 +202,7 @@ async function getActivityNameDates(foundSchool) {
       return tabNames;
     } catch (error) {
       console.error('Error:', error);
-      throw error; // Handle the error as needed
+      throw error;
     }
   }
   module.exports = {handleLogin};
