@@ -35,31 +35,31 @@ function SeasonalPage() {
         })
         .then((data) => {
           setActivityData(data);
-          setDataFetched(true); 
+          setDataFetched(true);
         })
         .catch((error) => {
-          setDataFetched(true); 
+          setDataFetched(true);
         });
     }
 
     if (location.state && location.state.activities) {
       fetchSeasonalPictures();
-    }else{
+    } else {
       navigate('/');
     }
   }, [location.state, navigate]);
 
-//Navigates to the seasonal date clicked
-const navigateToSection = (sectionId) => {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    const bannerHeight = document.querySelector('.banner').clientHeight;
-    const offset = bannerHeight;
-    const elementOffset = element.getBoundingClientRect().top + window.scrollY;
-    const scrollToY = elementOffset - offset;
-    window.scrollTo({ top: scrollToY, behavior: 'smooth' });
-  }
-};
+  //Navigates to the seasonal date clicked
+  const navigateToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const bannerHeight = document.querySelector('.banner').clientHeight;
+      const offset = bannerHeight;
+      const elementOffset = element.getBoundingClientRect().top + window.scrollY;
+      const scrollToY = elementOffset - offset;
+      window.scrollTo({ top: scrollToY, behavior: 'smooth' });
+    }
+  };
 
   const handleDownload = (fileId) => {
     const link = document.createElement('a');
@@ -78,11 +78,11 @@ const navigateToSection = (sectionId) => {
 
   return (
     <div className="pictures-container">
-  {activityData ? (
-    <Banner foundSchool={foundSchool} activityData={activityData} navigateToSection={navigateToSection} />
-  ) : (
-    <Banner foundSchool={foundSchool} />
-  )}
+      {activityData ? (
+        <Banner foundSchool={foundSchool} activityData={activityData} navigateToSection={navigateToSection} />
+      ) : (
+        <Banner foundSchool={foundSchool} />
+      )}
       {/* render school name based on mobile view */}
       {window.innerWidth <= 768 && foundSchool && (
         <div className="mobile-school-info">
@@ -90,45 +90,48 @@ const navigateToSection = (sectionId) => {
           <hr className="mobile-divider" />
         </div>
       )}
-          {/* Check if activityData is empty */}
-    {dataFetched && activityData.length === 0 && (
-      <div className="no-content-message">
-        <br /><br /><br />
-        There don't seem to be any photos available right now, please check later.
-      </div>
-    )}
-  {activityData.map((activity, index) => (
-    
-    <div key={index} className="activity-section" id={`activity-${activity.date.replace(/[^a-zA-Z0-9-_]/g, '-')}`}>
-    <h2>{activity.name}</h2>
-    <p>Date: {activity.date}</p>
-    <div>
-    <div className="thumbnails">
-      {activity.files.map((file, fileIndex) => (
-        <div key={fileIndex} className="thumbnail">
-          <div className="image-container">
-            <img
-              src={file.thumbnailUrl}
-              alt={`Thumbnail ${fileIndex}`}
-              onClick={() => { setSelectedImageIndex(fileIndex); setSelectedActivityIndex(index);}}
-              
-            />
+      {/* Check if activityData is empty */}
+      {dataFetched && activityData.length === 0 && (
+        <div className="no-content-message">
+          <br /><br /><br />
+          There don't seem to be any photos available right now, please check later.
+        </div>
+      )}
+      {activityData.map((activity, index) => (
+
+        <div key={index} className="activity-section" id={`activity-${activity.date.replace(/[^a-zA-Z0-9-_]/g, '-')}`}>
+          <p>Date: {activity.date}</p>
+          <p>{activity.name}</p>
+
+          <div>
+            <div className="thumbnails">
+              {activity.files.map((file, fileIndex) => (
+                <div key={fileIndex} className="thumbnail">
+                  <div className="image-container">
+                    <img
+                      src={file.thumbnailUrl}
+                      alt={`Thumbnail ${fileIndex}`}
+                      onClick={() => { setSelectedImageIndex(fileIndex); setSelectedActivityIndex(index); }}
+                      onError={(e) => {
+                        e.target.src = file.thumbnailUrl;
+                      }}
+                    />
+                  </div>
+                  <button
+                    className="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDownload(file.id);
+                    }}
+                  >
+                    Download
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-          <button
-            className="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDownload(file.id);
-            }}
-          >
-            Download
-          </button>
         </div>
       ))}
-    </div>
-</div>
-</div>
-))}
       {selectedImageIndex !== null && (
         <div className="modal-container">
           <div className="modal centered">
@@ -140,15 +143,15 @@ const navigateToSection = (sectionId) => {
               DOWNLOAD
             </button>
             <Gallery
-            items={activityData[selectedActivityIndex].files.map((file) => ({
-              renderItem: () => (
-                <iframe
-                src={`https://drive.google.com/file/d/${file.id}/preview`}
-                title={`Embedded iframe - ${file.name}`}
-                className="custom-iframe"
-              ></iframe>
-              ),
-            }))}
+              items={activityData[selectedActivityIndex].files.map((file) => ({
+                renderItem: () => (
+                  <iframe
+                    src={`https://drive.google.com/file/d/${file.id}/preview`}
+                    title={`Embedded iframe - ${file.name}`}
+                    className="custom-iframe"
+                  ></iframe>
+                ),
+              }))}
               startIndex={selectedImageIndex}
               showIndex={false}
               showThumbnails={false}
@@ -161,7 +164,7 @@ const navigateToSection = (sectionId) => {
             />
           </div>
         </div>
-        
+
       )}
     </div>
   );

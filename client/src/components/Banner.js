@@ -75,7 +75,7 @@ function Banner({foundSchool, activityData, navigateToSection}) {
     value={selectedDate}
     onChange={handleChange}
     options={options}
-    placeholder={<div classname="select-placeholder-text">日付を選択</div>}
+    placeholder={<div className="select-placeholder-text">日付を選択</div>}
     isSearchable={false}
     className="react-select-container"
     classNamePrefix="custom-select"

@@ -1,7 +1,7 @@
 /* PicturesPage.css */
 
 /* Sticky banner */
-.banner{
+.banner {
   position: sticky;
   top: 0;
   z-index: 100;
@@ -15,13 +15,13 @@
 
 .mobile-school-name {
   font-weight: bold;
-  color: #EF8200; 
-  margin-bottom: 5px; 
+  color: #EF8200;
+  margin-bottom: 5px;
 }
 
 .mobile-divider {
   border: none;
-  border-top: 2px dashed #EF8200; 
+  border-top: 2px dashed #EF8200;
   width: 100%;
   margin: 10px 0;
 }
@@ -33,91 +33,92 @@
   display: flex;
   position: relative;
   flex-direction: column;
-    text-align: center;
-    background-color: #FBF2E8;
-    background-image: url('../images/photobook-icons-kids.svg'); 
-    background-repeat: no-repeat;
-    background-size: 30%; 
-    background-position: left bottom;
-    background-attachment: fixed;
-  }
-  
-  .thumbnail {
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 220px;
-    height: 230px;
-    margin: 5px;
-    border-radius: 10px;
-    cursor: pointer;
-    overflow: hidden; 
-  }
-  
-  .thumbnail:hover .button {
-    opacity: 1;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1; 
-  }
-  
-  .image-container {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .image-container img {
-    max-width: 90%;
-    max-height: 70%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    border: 4px solid white; 
-    background-color: #FBF2E8;
-  }
-  
+  text-align: center;
+  background-color: #FBF2E8;
+  background-image: url('../images/photobook-icons-kids.svg');
+  background-repeat: no-repeat;
+  background-size: 30%;
+  background-position: left bottom;
+  background-attachment: fixed;
+}
+
+.thumbnail {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  height: 230px;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.thumbnail:hover .button {
+  opacity: 1;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 90%;
+  max-height: 70%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 4px solid white;
+  background-color: #FBF2E8;
+}
+
 /* BUTTON STUFF */
 .button {
-  background-color: #EF8200; 
+  background-color: #EF8200;
   color: white;
   border: none;
-  padding: 3px 15px; 
+  padding: 3px 15px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  border-radius: 50px; 
-  opacity: 0; 
-  position: absolute; 
+  border-radius: 50px;
+  opacity: 0;
+  position: absolute;
   text-align: center;
-  bottom: 10px; 
-  left: 50%; 
-  transform: translateX(-50%); 
-  z-index: 1; 
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
   display: flex;
 }
-.button::after{
-  background-size: 15px 15px; 
+
+.button::after {
+  background-size: 15px 15px;
   background-repeat: no-repeat;
   width: 15px;
   height: 15px;
   display: inline-block;
   margin-left: 10px;
-  content: ''; 
-  background-image: url('../images/photobook-download-small.svg'); 
+  content: '';
+  background-image: url('../images/photobook-download-small.svg');
   background-size: 15px 15px;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
 
 }
 
 .button:hover {
-  background-color: #D76F00; 
+  background-color: #D76F00;
 }
 
 .thumbnail:hover .button {
@@ -125,129 +126,141 @@
 }
 
 
-  body {
-    overflow-x: hidden;
-  }
-  
-  .thumbnail:hover img {
-    transform: scale(1.05); 
-    border-color: #EF8200;
-  }
-  
+body {
+  overflow-x: hidden;
+}
 
-  .modal-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(239, 130, 0, 0.7);
-    z-index: 999;
-    min-width: 300px;
-  }
+.thumbnail:hover img {
+  transform: scale(1.05);
+  border-color: #EF8200;
+}
 
-  
-  .modal {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    min-width: 300px;
-    z-index: 1000;
-  }
-  
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(239, 130, 0, 0.7);
+  z-index: 999;
+  min-width: 300px;
+}
+
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 300px;
+  z-index: 1000;
+}
+
 /* Close button positioning */
 .picture-container {
   position: relative;
   display: inline-block;
 }
-  /* Position the "Close" button */
-  .close-button {
-    position: absolute;
-    top: 20px; 
-    right: 20px; 
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 2;
-    border: none;
-    color: white;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-weight: bold;
-  }
-  
-  .close-button:hover {
-    transform: scale(1.1); 
-  }
 
-  .download-button {
-  
-    background-color: #EF8200; 
-    color: white;
-    border: 2px solid white; 
-    padding: 6px 35px;
-    cursor: pointer;
-    border-radius: 50px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 5%;
-    z-index: 1;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, opacity 0.3s ease; 
-    display: flex;
-    align-items: center;
-    opacity: 0.9; 
-    font-weight: 600;
-  }
-  .download-button::after {
-    content: ''; 
-    background-image: url('../images/photobook-download-small.svg'); 
-    background-size: 20px 20px; 
-    background-repeat: no-repeat; 
-    width: 20px;
-    height: 20px; 
-    margin-left: 20px; 
-  }
-  
-  .no-content-message{
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #EF8200;
-    
-  }
-  .download-button:hover {
-    background-color: #D76F00;
-    transform: translateX(-50%) scale(1.05);
-  }
+/* Position the "Close" button */
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 2;
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: bold;
+}
 
-  /* IMAGE GALLERY STYLES */
+.close-button:hover {
+  transform: scale(1.1);
+}
 
-  .custom-iframe {
-    width: 1280px;
-    height: 800px;
-    max-width: 80%;
-    max-height: 80vh; 
-    object-fit: contain;
-    border: 5px solid white;
-  }
+.download-button {
+
+  background-color: #EF8200;
+  color: white;
+  border: 2px solid white;
+  padding: 6px 35px;
+  cursor: pointer;
+  border-radius: 50px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 5%;
+  z-index: 1;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.download-button::after {
+  content: '';
+  background-image: url('../images/photobook-download-small.svg');
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  margin-left: 20px;
+}
+
+.activity-section {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #EF8200;
+
+}
+
+.no-content-message {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #EF8200;
+
+}
+
+.download-button:hover {
+  background-color: #D76F00;
+  transform: translateX(-50%) scale(1.05);
+}
+
+/* IMAGE GALLERY STYLES */
+
+.custom-iframe {
+  width: 1280px;
+  height: 800px;
+  max-width: 80%;
+  max-height: 80vh;
+  object-fit: contain;
+  border: 5px solid white;
+}
 
 
 .image-gallery-left-nav:hover svg {
   transform: scale(1.1);
   color: white;
 }
+
 .image-gallery-right-nav:hover svg {
   transform: scale(1.1);
   color: white;
@@ -269,18 +282,21 @@
 
   .download-button {
     position: absolute;
-    text-align: center; 
-    margin-top: 10px; 
-    height: auto; 
+    text-align: center;
+    margin-top: 10px;
+    height: auto;
   }
 
   .thumbnail {
-    position: relative;
+    margin: 0;
+    width: 200px;
+    margin: 2px;
   }
 
   .thumbnail:hover .button {
     bottom: 0px;
   }
+
   .button {
     position: absolute;
     text-align: center;
@@ -288,24 +304,25 @@
     left: 50%;
     transform: translateX(-50%);
     opacity: 1;
-    background-color: transparent; 
-    color: #EF8200; 
-    border: 2px solid #EF8200; 
-    padding: 3px 15px; 
-    border-radius: 50px; 
-    display: flex; 
+    background-color: transparent;
+    color: #EF8200;
+    border: 2px solid #EF8200;
+    padding: 3px 15px;
+    border-radius: 50px;
+    display: flex;
     font-weight: 600;
-    
+
   }
 
   .button:hover {
     background-color: transparent;
     color: #EF8200;
-    border: 3px solid #EF8200; 
+    border: 3px solid #EF8200;
   }
+
   /* Style the download button text */
   .button::before {
-    margin-right: 0px; 
+    margin-right: 0px;
     bottom: 0px
   }
 
@@ -314,7 +331,7 @@
     bottom: 0px;
     content: '';
     background-image: url('../images/photobook-download-small-orange.svg');
-    background-size: 15px 15px; 
+    background-size: 15px 15px;
     background-repeat: no-repeat;
     width: 15px;
     height: 15px;
@@ -322,22 +339,24 @@
     margin-left: 10px;
     bottom: 0px;
   }
+
   /* Remove the image scaling on hover */
   .thumbnail:hover img {
     transform: none;
   }
+
   .custom-iframe {
     max-height: 60vh;
   }
 
   /* same in mobile as its overwritten by base */
   .image-gallery-left-nav svg {
-    stroke-width: 2px;
+    stroke-width: 3px;
     box-shadow: none;
   }
-  
+
   .image-gallery-right-nav svg {
-    stroke-width: 2px;
+    stroke-width: 3px;
     box-shadow: none;
   }
 }

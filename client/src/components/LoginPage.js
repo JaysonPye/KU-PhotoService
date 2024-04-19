@@ -1,63 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Spinner.css'; 
+import '../styles/Spinner.css';
 import '../styles/LoginPage.css';
 import loginImage from '../images/home-img-1.jpg';
 import Banner from './Banner';
 
 function LoginPage() {
-    const [code, setCode] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-    // Handles login submission
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-  
-      try {
-        const response = await fetch('api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code }),
-        });
-  
-        if (response.ok) {
-          const data = await response.json();
-  
-          if (data.activities) {
-            // It's a seasonal login with activities
-            navigate(`/seasonal-pictures`, {
-              state: { activities: data.activities, foundSchool: data.school },
-            });
-          } else if (data.folder_id) {
-            // party page
-            navigate(`/pictures/${data.folder_id}`, {
-              state: { foundSchool: data.school },
-            });
-          } else {
-            // Handle any other type of response
-          }
+  const [code, setCode] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  // Handles login submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch('api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data.activities) {
+          // It's a seasonal login with activities
+          navigate(`/seasonal-pictures`, {
+            state: { activities: data.activities, foundSchool: data.school },
+          });
+        } else if (data.folder_id) {
+          // party page
+          navigate(`/pictures/${data.folder_id}`, {
+            state: { foundSchool: data.school },
+          });
         } else {
-          setErrorMessage('コードが間違っています');
+          // Handle any other type of response
         }
-      } catch (error) {
-        setErrorMessage('An error occurred. Please try again later.');
-      } finally {
-        setTimeout(() => {
-          setErrorMessage(''); // Clear error message after 3 seconds
-        }, 3000);
-        setLoading(false); // Set loading to false after the request (success or failure)
+      } else {
+        setErrorMessage('コードが間違っています');
       }
-  
-      setCode('');
-    };
-  
-    return (
-      <div className="login-page-container">
-        <Banner />
+    } catch (error) {
+      setErrorMessage('An error occurred. Please try again later.');
+    } finally {
+      setTimeout(() => {
+        setErrorMessage(''); // Clear error message after 3 seconds
+      }, 3000);
+      setLoading(false); // Set loading to false after the request (success or failure)
+    }
+
+    setCode('');
+  };
+
+  return (
+    <div className="login-page-container">
+      <Banner />
       <div className="login-container">
 
         <div className="login-box">
@@ -75,12 +75,12 @@ function LoginPage() {
                 onChange={(e) => setCode(e.target.value)}
                 required
                 className="login-input"
-                
+
               />
               <br />
               <br />
-                          {loading && <div className="spinner"></div>}
-              <button className="login-button"cd type="submit">
+              {loading && <div className="spinner"></div>}
+              <button className="login-button" disabled={loading} type="submit">
                 ログイン
               </button>
             </form>
@@ -90,8 +90,8 @@ function LoginPage() {
           </div>
         </div>
       </div>
-      </div>
-    );
-  }
-  
-  export default LoginPage;
+    </div>
+  );
+}
+
+export default LoginPage;

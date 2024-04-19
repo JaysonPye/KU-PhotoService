@@ -1,7 +1,8 @@
 /* Updated styles for the login container */
-html{
+html {
   background-color: #FBF2E8;
 }
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -11,7 +12,7 @@ html{
   overflow: hidden;
   color: #EF8200;
   height: calc(100vh - 100px);
-  background-image: url('../images/photobook-icons-kids.svg'); 
+  background-image: url('../images/photobook-icons-kids.svg');
   background-repeat: no-repeat;
   background-size: 30%;
   background-position: left bottom;
@@ -81,55 +82,57 @@ h2 {
   font-size: 20px;
 }
 
-  /* Updated styles for the login button */
-  .login-button {
-    background-color: #EF8200; 
-    color: white;
-    padding: 15px 70px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-weight: bold; 
-  }
-  
-  .login-button:hover {
-    background-color: #D76F00;
-  }
-  
-  .error-message {
-    color: #D76F00; 
-    margin-top: 10px;
-    font-size: 14px;
-    
-  }
-  
-  /* Mobile Styles */
+/* Updated styles for the login button */
+.login-button {
+  background-color: #EF8200;
+  color: white;
+  padding: 15px 70px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.login-button:hover {
+  background-color: #D76F00;
+}
+
+.error-message {
+  color: #D76F00;
+  margin-top: 10px;
+  font-size: 14px;
+
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
   .login-container {
-    background-size: 60%; 
-    background-position: center bottom; 
+    background-size: 60%;
+    background-position: center bottom;
   }
+
   .login-container::after {
     content: "";
     position: absolute;
-    top: 100%; 
+    top: 100%;
     left: 0;
     width: 100%;
-    height: 100vh; 
-    background-color: #FBF2E8; 
+    height: 100vh;
+    background-color: #FBF2E8;
   }
 
   .login-box {
-    background-color: transparent; 
-    box-shadow: none; 
-    border: none; 
-    width: 100%; 
-    padding: 0; 
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    width: 100%;
+    padding: 0;
   }
 
   .login-image-container {
-    display: none; /* Hide the image container */
+    display: none;
+    /* Hide the image container */
   }
 
   input[type="password"] {
@@ -139,10 +142,10 @@ h2 {
   }
 
   h2 {
-    font-size: 18px; 
+    font-size: 18px;
   }
 
   .login-button {
-    padding: 15px 50px; 
+    padding: 15px 50px;
   }
 }

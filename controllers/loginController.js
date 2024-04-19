@@ -5,89 +5,93 @@ const credentialsPath = path.join(__dirname, '..', 'credentials.json');
 const credentials = require(credentialsPath);
 
 //ID of the sheet to be used
-const sheetID = '14QuDBA2DdxCvtiOMN3seLttzPqiUAeXbgNsfTjD9FL0';
-
+const sheetID = '1LsVHxrYwYz3WQXu8n9Vad_hCuRXJyLRtdTJBVFZt3V0';
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
-
-// function to handle login logic
+// function to handle login logic, calls either partyLogin or seasonalLogin based on password length.
 async function handleLogin(req, res) {
-    const { code } = req.body;
-  
-    if (code.length <= 8) {
-      const partyData = await partyLogin(code);
-      if (partyData.success) {
-        res.json(partyData);
-      } else {
-        res.status(401).json({ success: false, message: partyData.message });
-      }
+  const { code } = req.body;
+  if (code.length <= 8) {
+    const partyData = await partyLogin(code);
+    if (partyData.success) {
+      res.json(partyData);
     } else {
-      const seasonalData = await seasonalLogin(code);
-      if (seasonalData.success) {
-        res.json(seasonalData);
-      } else {
-        res.status(401).json({ success: false, message: seasonalData.message });
-      }
-    }
-}
-
-  async function seasonalLogin(code){
-try{
-  const spreadsheetTabs = await getAllTabNames(sheetID);
-  //check if SSData tab exists
-  if(!spreadsheetTabs.includes('SSData')){
-    return{success: false, message: 'SSData tab not found in the spreadsheet'};
-  }
-  //Get SSData values
-  const ssdataValues = await fetchSheetData('SSData');
-  let foundSchool = null;
-  //Iterate rows in ssdata and check for login code in column one
-  //If it exists get the school name from the next column
-  for(const row of ssdataValues){
-    if(row.includes(code)){
-      
-      foundSchool=row[2];
-      break;
-    }
-  }
-  if (foundSchool) {
-    // Get names and dates of activities
-    const activitiesData = await getActivityNameDates(foundSchool);
-    const activities = activitiesData.activity_names_dates || [];
-    const schoolSheetData = await fetchSheetData(foundSchool);
-  
-    if (schoolSheetData && schoolSheetData.length > 1) {
-      const folderIdRow = schoolSheetData[3];
-  
-      // Iterate activities and get folder_id if available
-      const filteredActivities = [];
-      for (const activity of activities) {
-        const dateIndex = schoolSheetData[0].indexOf(activity.date);
-        if (dateIndex !== -1) {
-          const folderId = folderIdRow[dateIndex];
-          if (folderId) {
-            activity.folder_id = folderId;
-            filteredActivities.push(activity);
-          }
-        }
-      }
-  
-      return { success: true, school: foundSchool, activities: filteredActivities };
-    } else {
-      return { success: false, message: 'School data format error or missing' };
+      res.status(401).json({ success: false, message: partyData.message });
     }
   } else {
-    return { success: false, message: 'Incorrect Login Code' };
+    const seasonalData = await seasonalLogin(code);
+    if (seasonalData.success) {
+      res.json(seasonalData);
+    } else {
+      res.status(401).json({ success: false, message: seasonalData.message });
+    }
   }
-} catch (error) {
-  console.error('Error:', error);
-  return { success: false, message: 'An error occurred' };
 }
+
+async function getExpiryDates() {
+  const variablesData = await fetchSheetData('displayVariables');
+  //For speed the cell where these are is located is hard coded here
+
+  const seasonalExpiry = variablesData[1][1];
+  const partyExpiry = variablesData[1][2];
+
+
 }
-  async function partyLogin(code) {
+async function seasonalLogin(code) {
+  try {
+    const spreadsheetTabs = await getAllTabNames(sheetID);
+    //check if SSData tab exists
+    if (!spreadsheetTabs.includes('SSData')) {
+      return { success: false, message: 'SSData tab not found in the spreadsheet' };
+    }
+    //Get SSData values
+    const ssdataValues = await fetchSheetData('SSData');
+    let foundSchool = null;
+    //Iterate rows in ssdata and check for login code in column one
+    //If it exists get the school name from the next column
+    for (const row of ssdataValues) {
+      if (row.includes(code)) {
+        foundSchool = row[2];
+        break;
+      }
+    }
+    if (foundSchool) {
+      // Get names and dates of activities
+      const activitiesData = await getActivityNameDates(foundSchool);
+      const activities = activitiesData.activity_names_dates || [];
+      const schoolSheetData = await fetchSheetData(foundSchool);
+
+      if (schoolSheetData && schoolSheetData.length > 1) {
+        const folderIdRow = schoolSheetData[3];
+
+        // Iterate activities and get folder_id if available
+        const filteredActivities = [];
+        for (const activity of activities) {
+          const dateIndex = schoolSheetData[0].indexOf(activity.date);
+          if (dateIndex !== -1) {
+            const folderId = folderIdRow[dateIndex];
+            if (folderId) {
+              activity.folder_id = folderId;
+              filteredActivities.push(activity);
+            }
+          }
+        }
+        return { success: true, school: foundSchool, activities: filteredActivities };
+      } else {
+        return { success: false, message: 'School data format error or missing' };
+      }
+    } else {
+      return { success: false, message: 'Incorrect Login Code' };
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    return { success: false, message: 'An error occurred' };
+  }
+}
+async function partyLogin(code) {
   try {
     // Fetch data from 'displayVariables' sheet
     const displayVariablesData = await fetchSheetData('displayVariables');
@@ -134,7 +138,7 @@ try{
               }
             }
           }
-          return { success: false, message: "No matching code found"};
+          return { success: false, message: "No matching code found" };
         }
       }
     }
@@ -155,7 +159,7 @@ async function getActivityNameDates(foundSchool) {
     // Assuming each column represents an event
     for (let columnIndex = 0; columnIndex < seasonalNamesData[0].length; columnIndex++) {
       const column = seasonalNamesData.map(row => row[columnIndex]);
-      
+
       // Check if the column has at least 4 non-empty values (parties will have two)
       if (column.length >= 4 && column[1] && column[2] && column[3]) {
         const date = column[1].trim();
@@ -163,7 +167,6 @@ async function getActivityNameDates(foundSchool) {
         activityNamesDates.push({ date, name });
       }
     }
-
     return { success: true, activity_names_dates: activityNamesDates };
   } catch (error) {
     console.error('Error:', error);
@@ -172,37 +175,37 @@ async function getActivityNameDates(foundSchool) {
 
 }
 //Get data from a specified sheet
-  async function fetchSheetData(sheetName) {
-    try {
-      const authClient = await auth.getClient();
-      const response = await sheets.spreadsheets.values.get({
-        auth: authClient,
-        spreadsheetId: sheetID,
-        range: sheetName,
-      });
-  
-      const values = response.data.values;
-      return values;
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
-    }
+async function fetchSheetData(sheetName) {
+  try {
+    const authClient = await auth.getClient();
+    const response = await sheets.spreadsheets.values.get({
+      auth: authClient,
+      spreadsheetId: sheetID,
+      range: sheetName,
+    });
+
+    const values = response.data.values;
+    return values;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
   }
+}
 //Get a list of tabs in the sheet
-  async function getAllTabNames() {
-    try {
-      const authClient = await auth.getClient();
-      const response = await sheets.spreadsheets.get({
-        auth: authClient,
-        spreadsheetId: sheetID,
-      });
-  
-      const sheetsInfo = response.data.sheets;
-      const tabNames = sheetsInfo.map((sheet) => sheet.properties.title);
-      return tabNames;
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
-    }
+async function getAllTabNames() {
+  try {
+    const authClient = await auth.getClient();
+    const response = await sheets.spreadsheets.get({
+      auth: authClient,
+      spreadsheetId: sheetID,
+    });
+
+    const sheetsInfo = response.data.sheets;
+    const tabNames = sheetsInfo.map((sheet) => sheet.properties.title);
+    return tabNames;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
   }
-  module.exports = {handleLogin};
+}
+module.exports = { handleLogin };

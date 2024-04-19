@@ -6,14 +6,14 @@
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   height: 90px;
-  color: white; 
+  color: white;
 }
 
 .found-school {
   position: absolute;
-  left: 20px; 
+  left: 20px;
   font-weight: bold;
 }
 
@@ -28,12 +28,12 @@
   justify-content: space-between;
 }
 
-.select-container{
+.select-container {
   position: absolute;
   right: 20px;
   display: flex;
   align-items: center;
-  
+
 }
 
 .custom-select__control {
@@ -56,6 +56,17 @@
   border: 2px solid #EF8200;
 }
 
+.react-select-container {
+  border-color: #EF8200;
+}
+
+.react-select-container .custom-select__indicator svg {
+  fill: #EF8200;
+}
+
+.react-select-container .custom-select__indicator-separator {
+  background-color: #EF8200;
+}
 
 
 
@@ -63,15 +74,18 @@
 @media (max-width: 768px) {
   .banner {
     height: 60px;
-    justify-content: flex-start; 
+    justify-content: flex-start;
     padding-left: 10px;
   }
+
   .found-school {
-    display: none; 
+    display: none;
   }
+
   .banner .logo-icon {
-    max-height: 50px; 
+    max-height: 50px;
   }
+
   .banner {
     height: 60px;
   }
