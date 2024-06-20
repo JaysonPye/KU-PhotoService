@@ -13,6 +13,7 @@ function PicturesPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const location = useLocation();
   const foundSchool = location.state && location.state.foundSchool;
+  const expiryDate = location.state && location.state.expiryDate;
 
   const handleDownload = (fileId) => {
     const link = document.createElement('a');
@@ -73,12 +74,16 @@ function PicturesPage() {
   return (
     <div className="pictures-container">
       <Banner foundSchool={foundSchool} />
-
       {/* render school name based on mobile view */}
       {window.innerWidth <= 768 && foundSchool && (
         <div className="mobile-school-info">
           <div className="mobile-school-name">{foundSchool}</div>
           <hr className="mobile-divider" />
+        </div>
+      )}
+      {expiryDate &&(
+        <div className="expiry-date">
+          <p>画像の閲覧ダウンロードは {expiryDate}までとなります。</p>
         </div>
       )}
       <div className="picture-list">

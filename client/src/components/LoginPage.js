@@ -30,12 +30,12 @@ function LoginPage() {
         if (data.activities) {
           // It's a seasonal login with activities
           navigate(`/seasonal-pictures`, {
-            state: { activities: data.activities, foundSchool: data.school },
+            state: { activities: data.activities, foundSchool: data.school, expiryDate: data.expiryDate },
           });
         } else if (data.folder_id) {
           // party page
           navigate(`/pictures/${data.folder_id}`, {
-            state: { foundSchool: data.school },
+            state: { foundSchool: data.school, expiryDate: data.expiryDate },
           });
         } else {
           // Handle any other type of response

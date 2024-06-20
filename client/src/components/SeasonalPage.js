@@ -9,6 +9,7 @@ import { CustomCloseButton } from '../images/icons';
 function SeasonalPage() {
   const location = useLocation();
   const foundSchool = location.state && location.state.foundSchool;
+  const expiryDate = location.state && location.state.expiryDate;
   const [selectedActivityIndex, setSelectedActivityIndex] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [activityData, setActivityData] = useState([]);
@@ -88,6 +89,11 @@ function SeasonalPage() {
         <div className="mobile-school-info">
           <div className="mobile-school-name">{foundSchool}</div>
           <hr className="mobile-divider" />
+        </div>
+      )}
+      {expiryDate &&(
+        <div className="expiry-date">
+          <p>画像の閲覧ダウンロードは {expiryDate}までとなります。</p>
         </div>
       )}
       {/* Check if activityData is empty */}

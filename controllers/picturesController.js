@@ -88,9 +88,11 @@ async function getSeasonalPictures(req, res) {
       if (folderId) {
         try {
           const files = await fetchPicturesInFolder(folderId);
-          activity.files = files;
-          // If the promise succeeded, add the activity to the successfulActivities array
-          successfulActivities.push(activity);
+          if (files && files.length > 0) {
+            activity.files = files;
+            // If the promise succeeded and files are found, add the activity to the successfulActivities array
+            successfulActivities.push(activity);
+          }
         } catch (error) {
           // Log the error, but don't re-throw it
           console.error('Error fetching pictures for folder:', error);
@@ -99,12 +101,15 @@ async function getSeasonalPictures(req, res) {
     });
     // wait for promises
     await Promise.all(fetchPromises);
+
     // Check if no successful activities were found
     if (successfulActivities.length === 0) {
       return res.status(404).json({ success: false, message: 'No valid activities found' });
     }
-    //Sort activities rearranges the array based on dates and am/pm
+
+    // Sort activities rearranges the array based on dates and am/pm
     sortActivities(successfulActivities);
+
     // Return only the successful activities
     res.status(200).json(successfulActivities);
   } catch (error) {
@@ -140,6 +145,5 @@ async function getSeasonalPictures(req, res) {
   function extractAMPM(dateString) {
     return dateString.includes('(AM)') ? 'AM' : 'PM';
   }
-
 }
 module.exports = { getSeasonalPictures, getPictures };

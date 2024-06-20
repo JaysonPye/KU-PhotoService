@@ -14,32 +14,34 @@ const auth = new google.auth.GoogleAuth({
 // function to handle login logic, calls either partyLogin or seasonalLogin based on password length.
 async function handleLogin(req, res) {
   const { code } = req.body;
+  // Retrieve photo expiry dates to display in FE
+  const expiryDates = await getExpiryDates();
   if (code.length <= 8) {
     const partyData = await partyLogin(code);
     if (partyData.success) {
-      res.json(partyData);
+      res.json({ ...partyData, expiryDate: expiryDates.partyExpiry });
     } else {
       res.status(401).json({ success: false, message: partyData.message });
     }
   } else {
     const seasonalData = await seasonalLogin(code);
     if (seasonalData.success) {
-      res.json(seasonalData);
+      res.json({ ...seasonalData, expiryDate: expiryDates.seasonalExpiry });
     } else {
       res.status(401).json({ success: false, message: seasonalData.message });
     }
   }
 }
 
+// Get expiry of party and seasonal from displayVariables
 async function getExpiryDates() {
   const variablesData = await fetchSheetData('displayVariables');
-  //For speed the cell where these are is located is hard coded here
-
   const seasonalExpiry = variablesData[1][1];
   const partyExpiry = variablesData[1][2];
 
-
+  return { seasonalExpiry, partyExpiry };
 }
+
 async function seasonalLogin(code) {
   try {
     const spreadsheetTabs = await getAllTabNames(sheetID);
