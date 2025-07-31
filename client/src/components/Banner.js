@@ -5,14 +5,16 @@ import bannerIcon from '../images/banner-icon.svg';
 import Select from 'react-select';
 
 
+
 function Banner({foundSchool, activityData, navigateToSection}) {
   const [selectedDate, setSelectedDate,] = useState('');
   const navigate = useNavigate();
+  
 
   
   //custom selector to allow styling
   const options = activityData
-    ? activityData.map((activity, index) => ({
+    ? activityData.map((activity) => ({
         value: activity.date,
         label: activity.date,
       }))
@@ -21,7 +23,7 @@ function Banner({foundSchool, activityData, navigateToSection}) {
     setSelectedDate(selectedOption);
     if (selectedOption) {
       // navigate to the correct activity and remove kanji cuz it cant fit in URL
-      navigateToSection(`activity-${selectedOption.value.replace(/[^a-zA-Z0-9-_]/g, '-')}`);
+      navigateToSection(selectedOption.value);
     }
   };
 

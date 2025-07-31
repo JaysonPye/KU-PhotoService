@@ -10,17 +10,24 @@ function SeasonalPage() {
   const location = useLocation();
   const foundSchool = location.state && location.state.foundSchool;
   const expiryDate = location.state && location.state.expiryDate;
-  const [selectedActivityIndex, setSelectedActivityIndex] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [activityData, setActivityData] = useState([]);
   const navigate = useNavigate();
+  const [selectedActivity, setSelectedActivity] = useState(null);
   const [dataFetched, setDataFetched] = useState(false);
+  const [showPopover, setShowPopover] = useState(true);
 
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopover(false);
+    }, 5000);
+    return () => clearTimeout(timer); // Cleanup the timer
+  }, []);
 
+
+  useEffect(() => {
     function fetchSeasonalPictures() {
-
       fetch('/api/seasonal-pictures', {
         method: 'POST',
         headers: {
@@ -36,9 +43,13 @@ function SeasonalPage() {
         })
         .then((data) => {
           setActivityData(data);
+          if (data.length > 0) {
+            setSelectedActivity(data[0]); // Default to the first activity
+          }
           setDataFetched(true);
         })
         .catch((error) => {
+          console.error('Error fetching seasonal pictures:', error);
           setDataFetched(true);
         });
     }
@@ -50,18 +61,6 @@ function SeasonalPage() {
     }
   }, [location.state, navigate]);
 
-  //Navigates to the seasonal date clicked
-  const navigateToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const bannerHeight = document.querySelector('.banner').clientHeight;
-      const offset = bannerHeight;
-      const elementOffset = element.getBoundingClientRect().top + window.scrollY;
-      const scrollToY = elementOffset - offset;
-      window.scrollTo({ top: scrollToY, behavior: 'smooth' });
-    }
-  };
-
   const handleDownload = (fileId) => {
     const link = document.createElement('a');
     link.href = `https://drive.google.com/uc?export=download&id=${fileId}`;
@@ -72,52 +71,70 @@ function SeasonalPage() {
     document.body.removeChild(link);
   };
 
-
   const closeModal = () => {
     setSelectedImageIndex(null);
   };
 
+  const navigateToSection = (date) => {
+    console.log("Calling nav tosection")
+    const activity = activityData.find((a) => a.date === date);
+    setSelectedActivity(activity);
+  }
+
   return (
     <div className="pictures-container">
-      {activityData ? (
-        <Banner foundSchool={foundSchool} activityData={activityData} navigateToSection={navigateToSection} />
-      ) : (
-        <Banner foundSchool={foundSchool} />
+            {showPopover && (
+        <div className="popover">
+          右上の検索ボタンで日付を選択してください。
+        </div>
       )}
-      {/* render school name based on mobile view */}
+      {activityData.length > 0 && (
+        <Banner
+          foundSchool={foundSchool}
+          activityData={activityData}
+          navigateToSection={(date) => {
+            const activity = activityData.find((a) => a.date === date);
+            setSelectedActivity(activity);
+          }}
+        />
+      )}
+      {/* Render school name based on mobile view */}
       {window.innerWidth <= 768 && foundSchool && (
         <div className="mobile-school-info">
           <div className="mobile-school-name">{foundSchool}</div>
           <hr className="mobile-divider" />
         </div>
       )}
-      {expiryDate &&(
+      {expiryDate && (
         <div className="expiry-date">
           <p>画像の閲覧ダウンロードは {expiryDate}までとなります。</p>
         </div>
       )}
-      {/* Check if activityData is empty */}
+      {!dataFetched && <p className="loading-msg">Loading...</p>}
       {dataFetched && activityData.length === 0 && (
         <div className="no-content-message">
-          <br /><br /><br />
+          <br />
+          <br />
+          <br />
           There don't seem to be any photos available right now, please check later.
         </div>
       )}
-      {activityData.map((activity, index) => (
-
-        <div key={index} className="activity-section" id={`activity-${activity.date.replace(/[^a-zA-Z0-9-_]/g, '-')}`}>
-          <p>Date: {activity.date}</p>
-          <p>{activity.name}</p>
+      {selectedActivity && (
+        <div className="activity-section">
+          <p>Date: {selectedActivity.date}</p>
+          <p>{selectedActivity.name}</p>
 
           <div>
             <div className="thumbnails">
-              {activity.files.map((file, fileIndex) => (
+              {selectedActivity.files.map((file, fileIndex) => (
                 <div key={fileIndex} className="thumbnail">
                   <div className="image-container">
                     <img
                       src={file.thumbnailUrl}
                       alt={`Thumbnail ${fileIndex}`}
-                      onClick={() => { setSelectedImageIndex(fileIndex); setSelectedActivityIndex(index); }}
+                      onClick={() => {
+                        setSelectedImageIndex(fileIndex);
+                      }}
                       onError={(e) => {
                         e.target.src = file.thumbnailUrl;
                       }}
@@ -137,19 +154,21 @@ function SeasonalPage() {
             </div>
           </div>
         </div>
-      ))}
+      )}
       {selectedImageIndex !== null && (
         <div className="modal-container">
           <div className="modal centered">
             <CustomCloseButton onClick={closeModal} className="close-button" />
             <button
               className="download-button"
-              onClick={() => handleDownload(activityData[selectedActivityIndex].files[selectedImageIndex].id)}
+              onClick={() =>
+                handleDownload(selectedActivity.files[selectedImageIndex].id)
+              }
             >
               DOWNLOAD
             </button>
             <Gallery
-              items={activityData[selectedActivityIndex].files.map((file) => ({
+              items={selectedActivity.files.map((file) => ({
                 renderItem: () => (
                   <iframe
                     src={`https://drive.google.com/file/d/${file.id}/preview`}
@@ -170,7 +189,6 @@ function SeasonalPage() {
             />
           </div>
         </div>
-
       )}
     </div>
   );

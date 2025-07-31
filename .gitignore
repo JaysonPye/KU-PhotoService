@@ -26,3 +26,8 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 credentials.json
+
+# Build artifacts
+/client/build/
+/client/.eslintcache
+/client/asset-manifest.json
