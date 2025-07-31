@@ -43,6 +43,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, './client/build')));
 
+// Forbidden paths to satisy security scans even though they don't exist.
+
+app.use((req, res, next) => {
+  if (/^\/\.(git|hg|bzr|darcs|bitkeeper)(\/|$)/.test(req.path)) {
+    return res.status(403).send('Forbidden');
+  }
+  next();
+});
+
 app.use('/api', apiRoutes);
 
 // enable HTTPS redirection in a secure environment
