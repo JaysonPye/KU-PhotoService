@@ -35,7 +35,7 @@ app.use(
   })
 );
 
-
+app.use(helmet.frameguard({ action: 'deny' }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
