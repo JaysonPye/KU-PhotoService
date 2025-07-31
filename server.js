@@ -6,6 +6,36 @@ const enforce = require('express-sslify');
 const app = express();
 const port = process.env.PORT || 5000;
 const apiRoutes = require('./routes/api');
+const helmet = require('helmet');
+
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https:"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https:"],
+      imgSrc: [
+        "'self'",
+        "data:",
+        "https:",
+        "https://lh3.googleusercontent.com",
+        "https://drive.google.com"
+      ],
+      frameSrc: [
+        "'self'",
+        "https://lh3.googleusercontent.com",
+        "https://drive.google.com"
+      ],
+      fontSrc: ["'self'", "https:", "data:"],
+      connectSrc: ["'self'", "https:"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
+  })
+);
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
